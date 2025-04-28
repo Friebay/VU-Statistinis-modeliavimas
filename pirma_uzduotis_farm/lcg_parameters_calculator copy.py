@@ -3,97 +3,39 @@ from math import gcd
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import scipy.stats as stats
 
-def serial_test_triplets(sequence, m, d=2):
+
+def serial_test_triplets(sequence, d=2):
     """
-    Perform a serial test for triplets on a sequence of random numbers.
-    
-    Parameters:
-    - sequence: The sequence of random numbers
-    - m: The modulus used in the LCG
-    - d: Number of divisions per dimension (default=2)
-    
+    Perform the serial test for triplets (X_n, X_{n+1}, X_{n+2}).
+    Partition [0,1] into d equal subintervals per dimension, yielding d^3 cells.
     Returns:
-    - chi_square: The chi-square statistic
-    - p_value: The p-value of the test
-    - frequencies: The observed frequencies
+      chi2    : chi‑square statistic
+      p_value : p‑value of the test
+      freq    : observed frequency array of shape (d, d, d)
     """
-    # Normalize the sequence to [0,1)
-    normalized = [x/m for x in sequence]
-    
-    # Initialize frequency counter for all possible triplet combinations
-    num_bins = d**3  # For triplets with d divisions per dimension (2^3 = 8 bins)
-    observed_freq = [0] * num_bins
-    
-    # Count frequencies of triplets
-    for i in range(len(normalized) - 2):  # -2 because we need triplets
-        x1 = int(normalized[i] * d)
-        x2 = int(normalized[i+1] * d)
-        x3 = int(normalized[i+2] * d)
-        
-        # Calculate the bin index for this triplet
-        bin_idx = x1 * d**2 + x2 * d + x3
-        observed_freq[bin_idx] += 1
-    
-    # Expected frequency if the distribution is uniform
-    n = len(normalized) - 2  # Number of triplets
-    expected_freq = n / num_bins  # Same for all bins
-    
-    # Calculate chi-square statistic
-    chi_square = sum((obs - expected_freq)**2 / expected_freq for obs in observed_freq)
-    
-    # Degrees of freedom = num_bins - 1
-    df = num_bins - 1
-    
-    # Calculate p-value
-    from scipy.stats import chi2
-    p_value = 1 - chi2.cdf(chi_square, df)
-    
-    return chi_square, p_value, observed_freq
-
-def visualize_serial_test(frequencies, d=2):
-    """
-    Visualize the results of the serial test.
-    """
-    num_bins = d**3
-    
-    plt.figure(figsize=(12, 6))
-    
-    # Bar chart of frequencies
-    plt.subplot(1, 2, 1)
-    plt.bar(range(num_bins), frequencies)
-    plt.axhline(y=sum(frequencies)/num_bins, color='r', linestyle='-', label='Expected')
-    plt.title(f'Frequencies of Triplets (d={d})')
-    plt.xlabel('Bin Index')
-    plt.ylabel('Frequency')
-    plt.legend()
-    
-    # 3D visualization of frequencies
-    ax = plt.subplot(1, 2, 2, projection='3d')
-    
-    # Convert bin indices to 3D coordinates
-    x, y, z = [], [], []
-    for bin_idx in range(num_bins):
-        x3 = bin_idx % d
-        x2 = (bin_idx // d) % d
-        x1 = bin_idx // (d**2)
-        x.append(x1)
-        y.append(x2)
-        z.append(x3)
-    
-    # Plot as a 3D scatter plot
-    sc = ax.scatter(x, y, z, s=[freq*100/sum(frequencies) for freq in frequencies], 
-                   c=frequencies, cmap='viridis', alpha=0.7)
-    
-    plt.colorbar(sc, ax=ax, label='Frequency')
-    ax.set_title('3D Visualization of Triplet Frequencies')
-    ax.set_xlabel('First value')
-    ax.set_ylabel('Second value')
-    ax.set_zlabel('Third value')
-    
-    plt.tight_layout()
-    plt.savefig('lcg_serial_test.png')
-    plt.show()
+    if len(sequence) < 3:
+        raise ValueError("Sequence must contain at least 3 values.")
+    # Normalize to [0,1]
+    arr = np.asarray(sequence, dtype=float) / max(sequence)
+    n = len(arr) - 2
+    # Build triplets
+    trip = np.stack([arr[:-2], arr[1:-1], arr[2:]], axis=1)
+    # Cell indices in each dimension
+    idx = np.floor(trip * d).astype(int)
+    idx[idx == d] = d - 1
+    # Flatten into single index
+    flat = np.ravel_multi_index(idx.T, dims=(d, d, d))
+    # Count observed frequencies
+    freq = np.bincount(flat, minlength=d**3).reshape((d, d, d))
+    # Expected count per cell
+    E = n / (d**3)
+    # Chi‑square statistic
+    chi2 = ((freq - E)**2 / E).sum()
+    dof = d**3 - 1
+    p_value = 1 - stats.chi2.cdf(chi2, df=dof)
+    return chi2, p_value, freq
 
 def plot_correlation(sequence, m, a, c, valid_c_values):
     """Plot correlation visualizations for the LCG sequence."""
@@ -332,25 +274,9 @@ def main():
         # Create visualizations
         # plot_correlation(long_sequence, m, best_a, best_c, valid_c_values)
 
-        # Generate a longer sequence for testing
-        print("\nRunning Serial Test for Triplets...")
-        long_sequence = generate_lcg_sequence(best_a, best_c, m, seed, length=10000)
-        
-        # Perform the serial test with d=2
-        chi_square, p_value, frequencies = serial_test_triplets(long_sequence, m, d=2)
-        
-        # Interpret the results
-        print(f"\nSerial Test for Triplets (d=2):")
-        print(f"Chi-square statistic: {chi_square:.4f}")
-        print(f"P-value: {p_value:.4f}")
-        
-        if p_value < 0.05:
-            print("The sequence FAILS the serial test (p < 0.05)")
-        else:
-            print("The sequence PASSES the serial test (p >= 0.05)")
-        
-        # Visualize the results
-        visualize_serial_test(frequencies, d=2)
+        chi2, p_val, freq = serial_test_triplets(long_sequence, d=2)
+        print(f"\nSerial Test (triplets), d=2 → χ² = {chi2:.3f}, p = {p_val:.3f}, dof = {2**3-1}")
+        print("Observed frequencies:\n", freq)
 
     else:
         print("Nerasta tinkamų daugiklio 'a' reikšmių.")

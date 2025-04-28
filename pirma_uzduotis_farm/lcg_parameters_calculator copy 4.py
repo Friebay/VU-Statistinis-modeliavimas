@@ -4,96 +4,87 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-def serial_test_triplets(sequence, m, d=2):
+def serial_test_triplets(sequence, alpha=0.05):
     """
-    Perform a serial test for triplets on a sequence of random numbers.
+    Performs the Serial Test for triplets (m=3) on a binary sequence.
     
     Parameters:
-    - sequence: The sequence of random numbers
-    - m: The modulus used in the LCG
-    - d: Number of divisions per dimension (default=2)
+    sequence (list or array-like): A sequence of integers (0s and 1s)
+    alpha (float): Significance level for hypothesis testing, default 0.05
     
     Returns:
-    - chi_square: The chi-square statistic
-    - p_value: The p-value of the test
-    - frequencies: The observed frequencies
+    dict: A dictionary containing the test results
     """
-    # Normalize the sequence to [0,1)
-    normalized = [x/m for x in sequence]
+    import numpy as np
+    from scipy import stats
     
-    # Initialize frequency counter for all possible triplet combinations
-    num_bins = d**3  # For triplets with d divisions per dimension (2^3 = 8 bins)
-    observed_freq = [0] * num_bins
+    # Input validation
+    if not isinstance(sequence, (list, np.ndarray)):
+        raise TypeError("Sequence must be a list or numpy array")
     
-    # Count frequencies of triplets
-    for i in range(len(normalized) - 2):  # -2 because we need triplets
-        x1 = int(normalized[i] * d)
-        x2 = int(normalized[i+1] * d)
-        x3 = int(normalized[i+2] * d)
-        
-        # Calculate the bin index for this triplet
-        bin_idx = x1 * d**2 + x2 * d + x3
-        observed_freq[bin_idx] += 1
+    if len(sequence) < 3:
+        raise ValueError("Sequence must have at least 3 elements for triplet analysis")
     
-    # Expected frequency if the distribution is uniform
-    n = len(normalized) - 2  # Number of triplets
-    expected_freq = n / num_bins  # Same for all bins
+    # Convert to numpy array for easier handling
+    seq = np.array(sequence)
     
-    # Calculate chi-square statistic
-    chi_square = sum((obs - expected_freq)**2 / expected_freq for obs in observed_freq)
+    # Check that sequence contains only 0s and 1s
+    if not np.all(np.isin(seq, [0, 1])):
+        raise ValueError("Sequence must contain only 0s and 1s")
     
-    # Degrees of freedom = num_bins - 1
-    df = num_bins - 1
+    # Get sequence length
+    n = len(seq)
+    
+    # Generate all possible triplets (000, 001, ..., 111)
+    all_triplets = [(i, j, k) for i in [0, 1] for j in [0, 1] for k in [0, 1]]
+    
+    # Count occurrences of each triplet
+    observed_counts = {}
+    for triplet in all_triplets:
+        observed_counts[triplet] = 0
+    
+    # Count overlapping triplets in the sequence
+    for i in range(n - 2):
+        triplet = tuple(seq[i:i+3])
+        observed_counts[triplet] += 1
+    
+    # Calculate expected count for each triplet
+    # For a random sequence, each triplet should appear with equal probability
+    expected_count = (n - 2) / 8  # Number of triplets divided by number of possible triplets (2^3 = 8)
+    
+    # Calculate Chi-squared statistic
+    chi_squared = sum((observed - expected_count)**2 / expected_count 
+                      for observed in observed_counts.values())
+    
+    # Degrees of freedom = Number of categories - 1
+    degrees_of_freedom = 7  # 8 triplets - 1
     
     # Calculate p-value
-    from scipy.stats import chi2
-    p_value = 1 - chi2.cdf(chi_square, df)
+    p_value = 1 - stats.chi2.cdf(chi_squared, degrees_of_freedom)
     
-    return chi_square, p_value, observed_freq
-
-def visualize_serial_test(frequencies, d=2):
-    """
-    Visualize the results of the serial test.
-    """
-    num_bins = d**3
+    # Determine if null hypothesis should be rejected
+    reject_null = p_value < alpha
     
-    plt.figure(figsize=(12, 6))
+    # Format conclusion
+    if reject_null:
+        conclusion = f"Reject null hypothesis (p-value = {p_value:.4f} < {alpha}). " \
+                     f"The sequence likely exhibits non-randomness in triplet patterns."
+    else:
+        conclusion = f"Fail to reject null hypothesis (p-value = {p_value:.4f} >= {alpha}). " \
+                     f"No significant evidence of non-randomness in triplet patterns."
     
-    # Bar chart of frequencies
-    plt.subplot(1, 2, 1)
-    plt.bar(range(num_bins), frequencies)
-    plt.axhline(y=sum(frequencies)/num_bins, color='r', linestyle='-', label='Expected')
-    plt.title(f'Frequencies of Triplets (d={d})')
-    plt.xlabel('Bin Index')
-    plt.ylabel('Frequency')
-    plt.legend()
+    # Prepare results
+    results = {
+        "chi_squared": chi_squared,
+        "degrees_of_freedom": degrees_of_freedom,
+        "p_value": p_value,
+        "conclusion": conclusion,
+        "observed_counts": observed_counts,
+        "expected_count": expected_count,
+        "alpha": alpha
+    }
     
-    # 3D visualization of frequencies
-    ax = plt.subplot(1, 2, 2, projection='3d')
-    
-    # Convert bin indices to 3D coordinates
-    x, y, z = [], [], []
-    for bin_idx in range(num_bins):
-        x3 = bin_idx % d
-        x2 = (bin_idx // d) % d
-        x1 = bin_idx // (d**2)
-        x.append(x1)
-        y.append(x2)
-        z.append(x3)
-    
-    # Plot as a 3D scatter plot
-    sc = ax.scatter(x, y, z, s=[freq*100/sum(frequencies) for freq in frequencies], 
-                   c=frequencies, cmap='viridis', alpha=0.7)
-    
-    plt.colorbar(sc, ax=ax, label='Frequency')
-    ax.set_title('3D Visualization of Triplet Frequencies')
-    ax.set_xlabel('First value')
-    ax.set_ylabel('Second value')
-    ax.set_zlabel('Third value')
-    
-    plt.tight_layout()
-    plt.savefig('lcg_serial_test.png')
-    plt.show()
+    return results
 
 def plot_correlation(sequence, m, a, c, valid_c_values):
     """Plot correlation visualizations for the LCG sequence."""
@@ -329,28 +320,21 @@ def main():
         print("\nGeneruojamos vizualizacijos...")
         long_sequence = generate_lcg_sequence(best_a, best_c, m, seed, length=1000)
         
+        # Convert LCG sequence to binary (using least significant bit)
+        binary_sequence = [x % 2 for x in long_sequence]
+        
+        # Run the serial test
+        serial_test_results = serial_test_triplets(binary_sequence)
+        
+        # Print the results
+        print("\nSerial Test for Randomness (Triplets):")
+        print(f"Chi-squared statistic: {serial_test_results['chi_squared']:.4f}")
+        print(f"Degrees of freedom: {serial_test_results['degrees_of_freedom']}")
+        print(f"p-value: {serial_test_results['p_value']:.4f}")
+        print(f"\nConclusion: {serial_test_results['conclusion']}")
+        
         # Create visualizations
         # plot_correlation(long_sequence, m, best_a, best_c, valid_c_values)
-
-        # Generate a longer sequence for testing
-        print("\nRunning Serial Test for Triplets...")
-        long_sequence = generate_lcg_sequence(best_a, best_c, m, seed, length=10000)
-        
-        # Perform the serial test with d=2
-        chi_square, p_value, frequencies = serial_test_triplets(long_sequence, m, d=2)
-        
-        # Interpret the results
-        print(f"\nSerial Test for Triplets (d=2):")
-        print(f"Chi-square statistic: {chi_square:.4f}")
-        print(f"P-value: {p_value:.4f}")
-        
-        if p_value < 0.05:
-            print("The sequence FAILS the serial test (p < 0.05)")
-        else:
-            print("The sequence PASSES the serial test (p >= 0.05)")
-        
-        # Visualize the results
-        visualize_serial_test(frequencies, d=2)
 
     else:
         print("Nerasta tinkamų daugiklio 'a' reikšmių.")
