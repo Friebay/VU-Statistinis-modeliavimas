@@ -1,6 +1,38 @@
 import math
 from math import gcd
 import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+def plot_correlation(sequence, m, a, c, valid_c_values):
+    """Plot correlation visualizations for the LCG sequence."""
+    normalized = [x/m for x in sequence]
+    
+    plt.figure(figsize=(15, 6))
+    
+    # Scatter plot of consecutive values
+    plt.subplot(1, 2, 1)
+    plt.scatter(normalized[:-1], normalized[1:], alpha=0.5, s=10)
+    plt.title(f'Scatter Plot of X_n vs X_n+1 (a={a}, c={c}, m={m})')
+    plt.xlabel('X_n / m')
+    plt.ylabel('X_n+1 / m')
+    plt.grid(True, alpha=0.3)
+    
+    # Correlation bar chart for different c values
+    plt.subplot(1, 2, 2)
+    c_subset = valid_c_values[:100]  # First 100 valid c values
+    correlations = [lag1_pearson(generate_lcg_sequence(a, c_val, m, 1), m) for c_val in c_subset]
+    
+    plt.bar(range(len(c_subset)), correlations)
+    plt.title('Correlation for Different c Values')
+    plt.xlabel('c Value Index')
+    plt.ylabel('Absolute Correlation')
+    plt.xticks(range(len(c_subset)), c_subset, rotation=90)
+    
+    plt.tight_layout()
+    plt.savefig('lcg_correlation.png')
+    plt.show()
+
 
 def prime_factorization(n):
     """Find prime factorization of a number n."""
@@ -97,7 +129,7 @@ def calculate_correlation(sequence):
     # Return absolute value as we want minimum correlation regardless of direction
     return abs(correlation)
 
-def test_c_correlation(a, m, valid_c_values, num_tests=50, seed=42):
+def test_c_correlation(a, m, valid_c_values, num_tests=50, seed=1):
     """Test different c values and find the one with minimal adjacent term correlation."""
     c_correlations = []
     
@@ -110,6 +142,17 @@ def test_c_correlation(a, m, valid_c_values, num_tests=50, seed=42):
     c_correlations.sort(key=lambda x: x[1])
     
     return c_correlations
+
+import numpy as np
+
+def lag1_pearson(sequence, m):
+    """
+    Pearsono koreliacija tarp X[n] ir X[n+1],
+    normalizuota į [0,1] dalinant iš m.
+    """
+    arr = np.array(sequence) / m
+    x, y = arr[:-1], arr[1:]
+    return abs(np.corrcoef(x, y)[0, 1])
 
 def main():
     # Given modulus
@@ -179,14 +222,32 @@ def main():
         print("\nMonte Carlo užduočiai rekomenduojama c reikšmė:")
         print(f"c = {best_c} (koreliacija: {best_corr:.6f})")
         
-        # Original method
-        recommended_c = valid_c_values[0] if valid_c_values else None
-        
         print("\nPilni LCG parametrai:")
         print(f"a = {best_a}")
         print(f"c = {best_c}  (pasirinktas mažiausiai koreliuotiems gretimų narių)")
         print(f"m = {m}")
         print(f"LCG formulė: X_n+1 = ({best_a} * X_n + {best_c}) mod {m}")
+        
+        # Generate and display the first 10 pseudorandom numbers
+        seed = 1  # Initial seed value
+        sequence = generate_lcg_sequence(best_a, best_c, m, seed, length=10)
+        
+        print("\nPirmieji 10 sugeneruotų pseudoatsitiktinių skaičių:")
+        print(f"{'n':<5}{'X_n':<8}{'X_n/m':<10}")
+        for i, number in enumerate(sequence):
+            normalized = number / m
+            print(f"{i:<5}{number:<8}{normalized:.6f}")
+
+        # Generate a longer sequence for visualization
+        print("\nGeneruojamos vizualizacijos...")
+        long_sequence = generate_lcg_sequence(best_a, best_c, m, seed, length=1000)
+        
+        # Create visualizations
+        plot_correlation(long_sequence, m, best_a, best_c, valid_c_values)
+        
+        print("Vizualizacijos sukurtos ir išsaugotos.")
+
+
     else:
         print("Nerasta tinkamų daugiklio 'a' reikšmių.")
 
