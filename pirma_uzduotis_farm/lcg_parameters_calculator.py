@@ -1,9 +1,6 @@
 import math
 from math import gcd
 import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-
 import scipy.stats as stats
 
 def frequency_test(sequence, alpha=0.05):
@@ -68,7 +65,6 @@ def serial_test_triplets(sequence, alpha=0.05):
     
     # Generate non-overlapping triplets from the sequence as per the book's description
     # We take groups of 3 elements: (Y_0, Y_1, Y_2), (Y_3, Y_4, Y_5), ...
-    # Make sure we only use complete triplets
     usable_length = (len(sequence) // 3) * 3
     triplets = [tuple(sequence[i:i+3]) for i in range(0, usable_length, 3)]
     
@@ -100,7 +96,7 @@ def serial_test_triplets(sequence, alpha=0.05):
     
     # Conclusion
     conclusion = "Fail to reject null hypothesis" if p_value > alpha else "Reject null hypothesis"
-      # Return results
+
     return {
         "chi_squared": chi_squared,
         "degrees_of_freedom": degrees_of_freedom,
@@ -110,36 +106,6 @@ def serial_test_triplets(sequence, alpha=0.05):
         "expected_count": expected_count,
         "reliability": reliability
     }
-
-def plot_correlation(sequence, m, a, c, valid_c_values):
-    """Plot correlation visualizations for the LCG sequence."""
-    normalized = [x/m for x in sequence]
-    
-    plt.figure(figsize=(15, 6))
-    
-    # Scatter plot of consecutive values
-    plt.subplot(1, 2, 1)
-    plt.scatter(normalized[:-1], normalized[1:], alpha=0.5, s=10)
-    plt.title(f'Scatter Plot of X_n vs X_n+1 (a={a}, c={c}, m={m})')
-    plt.xlabel('X_n / m')
-    plt.ylabel('X_n+1 / m')
-    plt.grid(True, alpha=0.3)
-    
-    # Correlation bar chart for different c values
-    plt.subplot(1, 2, 2)
-    c_subset = valid_c_values[:100]  # First 100 valid c values
-    correlations = [lag1_pearson(generate_lcg_sequence(a, c_val, m, 1), m) for c_val in c_subset]
-    
-    plt.bar(range(len(c_subset)), correlations)
-    plt.title('Correlation for Different c Values')
-    plt.xlabel('c Value Index')
-    plt.ylabel('Absolute Correlation')
-    plt.xticks(range(len(c_subset)), c_subset, rotation=90)
-    
-    plt.tight_layout()
-    plt.savefig('lcg_correlation.png')
-    plt.show()
-
 
 def prime_factorization(n):
     """Find prime factorization of a number n."""
@@ -250,25 +216,11 @@ def test_c_correlation(a, m, valid_c_values, num_tests=50, seed=1):
     
     return c_correlations
 
-import numpy as np
-
-def lag1_pearson(sequence, m):
-    """
-    Pearsono koreliacija tarp X[n] ir X[n+1],
-    normalizuota į [0,1] dalinant iš m.
-    """
-    arr = np.array(sequence) / m
-    x, y = arr[:-1], arr[1:]
-    return abs(np.corrcoef(x, y)[0, 1])
-
 def main():
-    # Given modulus
-    m = 776  # 2^3 * 97
-    
+    m = 776
     print(f"Modulis m = {m} = 2^3 * 97")
-    print("\nIeškome daugiklio 'a' su maksimaliu periodu ir galimgumu:")
+    print("\nIeškome daugiklio 'a' su maksimaliu periodu ir galingumu:")
     
-    # Find all valid 'a' values
     valid_a_values = []
     
     # Print prime factorization for debugging
@@ -315,7 +267,7 @@ def main():
         c_correlations = test_c_correlation(best_a, m, valid_c_values)
         
         print(f"\n{'c reikšmė':<15}{'Koreliacija':<15}")
-        for c, corr in c_correlations[:10]:  # Show top 10 results
+        for c, corr in c_correlations[:5]:  # Show top 10 results
             print(f"{c:<15}{corr:.6f}")
         
         # Best c value (with minimal correlation)
@@ -332,9 +284,9 @@ def main():
         
         # Generate and display the first 10 pseudorandom numbers
         seed = 1  # Initial seed value
-        sequence = generate_lcg_sequence(best_a, best_c, m, seed, length=10)
+        sequence = generate_lcg_sequence(best_a, best_c, m, seed, length=5)
         
-        print("\nPirmieji 10 sugeneruotų pseudoatsitiktinių skaičių:")
+        print("\nPirmieji 5 sugeneruotų pseudoatsitiktinių skaičių:")
         print(f"{'n':<5}{'X_n':<8}{'X_n/m':<10}")
         for i, number in enumerate(sequence):
             normalized = number / m
