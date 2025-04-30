@@ -5,33 +5,11 @@ from scipy import stats
 from lcg_parameters_calculator import generate_lcg_sequence
 
 def generate_uniform_random_numbers(a, c, m, seed, length):
-    """
-    Generate uniform random numbers in [0,1] using the LCG algorithm.
-    
-    Parameters:
-        a (int): Multiplier for LCG
-        c (int): Increment for LCG
-        m (int): Modulus for LCG
-        seed (int): Seed value for LCG
-        length (int): Number of random numbers to generate
-    
-    Returns:
-        list: Uniform random numbers in [0,1]
-    """
     sequence = generate_lcg_sequence(a, c, m, seed, length)
     # Normalize to [0,1]
     return [x / m for x in sequence]
 
 def box_muller_transform(uniform_random_numbers):
-    """
-    Apply Box-Muller transform to convert uniform random numbers to standard normal.
-    
-    Parameters:
-        uniform_random_numbers (list): Uniform random numbers in [0,1]
-    
-    Returns:
-        list: Standard normal random variables
-    """
     standard_normals = []
     
     # Process pairs of uniform random numbers
@@ -55,16 +33,6 @@ def box_muller_transform(uniform_random_numbers):
     return standard_normals
 
 def generate_chi_squared(standard_normals, df):
-    """
-    Generate chi-squared random variables with df degrees of freedom.
-    
-    Parameters:
-        standard_normals (list): Standard normal random variables
-        df (int): Degrees of freedom
-    
-    Returns:
-        list: Chi-squared random variables
-    """
     chi_squared_values = []
     
     # Process in groups of df standard normals
@@ -78,13 +46,6 @@ def generate_chi_squared(standard_normals, df):
     return chi_squared_values
 
 def analyze_chi_squared_distribution(chi_squared_values, df):
-    """
-    Analyze the generated chi-squared distribution.
-    
-    Parameters:
-        chi_squared_values (list): Chi-squared random variables
-        df (int): Degrees of freedom
-    """
     print(f"\nChi-squared Distribution Analysis (df={df}):")
     print(f"Sample Size: {len(chi_squared_values)}")
     
@@ -115,13 +76,6 @@ def analyze_chi_squared_distribution(chi_squared_values, df):
         print(f"{q:<10}{sample_quantile:<15.4f}{theoretical_quantile:<15.4f}{diff:<15.4f}")
 
 def plot_chi_squared_distribution(chi_squared_values, df):
-    """
-    Plot histogram of chi-squared random variables with theoretical PDF overlay.
-    
-    Parameters:
-        chi_squared_values (list): Chi-squared random variables
-        df (int): Degrees of freedom
-    """
     plt.figure(figsize=(10, 6))
     
     # Filter out extreme values for better visualization
@@ -144,8 +98,6 @@ def plot_chi_squared_distribution(chi_squared_values, df):
     plt.legend()
     plt.grid(True, alpha=0.3)
     
-    # Save the plot
-    plt.savefig('chi_squared_distribution_plot.png')
     plt.tight_layout()
     plt.show()
 
@@ -176,16 +128,9 @@ def main():
     # Generate chi-squared variables
     print(f"Generating chi-squared variables with {df} degrees of freedom...")
     chi_squared_values = generate_chi_squared(standard_normals, df)
-    
-    # Analyze the generated chi-squared distribution
+
     analyze_chi_squared_distribution(chi_squared_values, df)
-    
-    # Plot the distribution
-    print("\nGenerating plot of chi-squared distribution...")
     plot_chi_squared_distribution(chi_squared_values, df)
-    
-    print(f"\nSuccessfully generated {len(chi_squared_values)} chi-squared random variables.")
-    print("Plot saved as 'chi_squared_distribution_plot.png'")
 
 if __name__ == "__main__":
     main()

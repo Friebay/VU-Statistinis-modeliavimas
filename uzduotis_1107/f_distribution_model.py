@@ -5,36 +5,13 @@ from scipy import stats
 from lcg_parameters_calculator import generate_lcg_sequence
 
 def generate_uniform_random_numbers(a, c, m, seed, length):
-    """
-    Generate uniform random numbers in [0,1] using the LCG algorithm.
-    
-    Parameters:
-        a (int): Multiplier for LCG
-        c (int): Increment for LCG
-        m (int): Modulus for LCG
-        seed (int): Seed value for LCG
-        length (int): Number of random numbers to generate
-    
-    Returns:
-        list: Uniform random numbers in [0,1]
-    """
     sequence = generate_lcg_sequence(a, c, m, seed, length)
     # Normalize to [0,1]
     return [x / m for x in sequence]
 
 def box_muller_transform(uniform_random_numbers):
-    """
-    Apply Box-Muller transform to convert uniform random numbers to standard normal.
-    
-    Parameters:
-        uniform_random_numbers (list): Uniform random numbers in [0,1]
-    
-    Returns:
-        list: Standard normal random variables
-    """
     standard_normals = []
     
-    # Process pairs of uniform random numbers
     for i in range(0, len(uniform_random_numbers) - 1, 2):
         u1 = uniform_random_numbers[i]
         u2 = uniform_random_numbers[i + 1]
@@ -55,16 +32,6 @@ def box_muller_transform(uniform_random_numbers):
     return standard_normals
 
 def generate_chi_squared(standard_normals, df):
-    """
-    Generate chi-squared random variables with df degrees of freedom.
-    
-    Parameters:
-        standard_normals (list): Standard normal random variables
-        df (int): Degrees of freedom
-    
-    Returns:
-        list: Chi-squared random variables
-    """
     chi_squared_values = []
     
     # Process in groups of df standard normals
@@ -150,14 +117,6 @@ def analyze_f_distribution(f_values, v1, v2):
         print(f"{q:<10}{sample_quantile:<15.4f}{theoretical_quantile:<15.4f}{diff:<15.4f}")
 
 def plot_f_distribution(f_values, v1, v2):
-    """
-    Plot histogram of F-distributed random variables with theoretical PDF overlay.
-    
-    Parameters:
-        f_values (list): F-distributed random variables
-        v1 (int): Numerator degrees of freedom
-        v2 (int): Denominator degrees of freedom
-    """
     plt.figure(figsize=(10, 6))
     
     # Filter out extreme values for better visualization
@@ -181,18 +140,15 @@ def plot_f_distribution(f_values, v1, v2):
     plt.grid(True, alpha=0.3)
     
     # Save the plot
-    plt.savefig('f_distribution_plot.png')
     plt.tight_layout()
     plt.show()
 
 def main():
-    # LCG parameters from lcg_parameters_calculator.py output
-    a = 370  # Multiplier (from your calculator)
-    c = 71   # Increment (from your calculator)
-    m = 1107 # Modulus = 3^3 * 41
+    a = 370
+    c = 71
+    m = 1107
     seed = 1
     
-    # F-distribution parameters
     v1 = 2  # Numerator degrees of freedom
     v2 = 3  # Denominator degrees of freedom
     
@@ -202,7 +158,7 @@ def main():
     # - v2 standard normals for chi-squared with v2 df
     # Each Box-Muller transform needs 2 uniform random numbers to generate 2 standard normals
     
-    target_sample_size = 1000  # Number of F-distributed values to generate
+    target_sample_size = 1000
     needed_uniforms = math.ceil(target_sample_size * (v1 + v2) / 2)
     
     # Generate uniform random numbers using your LCG
@@ -222,15 +178,9 @@ def main():
     print("Computing F-distributed random variables...")
     f_values = generate_f_distribution(chi_squared_v1, chi_squared_v2, v1, v2)
     
-    # Analyze the generated F-distribution
     analyze_f_distribution(f_values, v1, v2)
     
-    # Plot the distribution
-    print("\nGenerating plot of F-distribution...")
     plot_f_distribution(f_values, v1, v2)
-    
-    print(f"\nSuccessfully generated {len(f_values)} F-distributed random variables.")
-    print("Plot saved as 'f_distribution_plot.png'")
 
 if __name__ == "__main__":
     main()
