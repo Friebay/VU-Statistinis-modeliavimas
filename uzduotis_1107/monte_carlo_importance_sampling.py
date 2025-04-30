@@ -2,7 +2,7 @@ import math
 import numpy as np
 from lcg_parameters_calculator import generate_lcg_sequence
 
-def monte_carlo_integration(func, a, b, num_samples):
+def monte_carlo_integration(func, a, b, num_samples=1000):
     """
     Perform Monte Carlo integration of a function over interval [a, b]
     
@@ -10,19 +10,20 @@ def monte_carlo_integration(func, a, b, num_samples):
         func (function): Function to integrate
         a (float): Lower bound of integration
         b (float): Upper bound of integration
-        num_samples (int): Number of random points to use
+        num_samples (int): Number of random points to use, default is 1000
         
     Returns:
         float: Estimated value of the integral
-    """    # Generate uniform random numbers using LCG
+    """
+    # Generate uniform random numbers using LCG
     # Parameters from lcg_parameters_calculator output
     lcg_a = 370  # Multiplier
     lcg_c = 71   # Increment
     lcg_m = 1107  # Modulus = 3^3 * 41
     seed = 1
     
-    # Generate more random numbers than needed to ensure we have enough
-    lcg_values = generate_lcg_sequence(lcg_a, lcg_c, lcg_m, seed, num_samples + 100)
+    # Generate exactly the number of samples needed
+    lcg_values = generate_lcg_sequence(lcg_a, lcg_c, lcg_m, seed, num_samples)
     
     # Convert to values in interval [a, b]
     uniform_samples = []
@@ -30,9 +31,6 @@ def monte_carlo_integration(func, a, b, num_samples):
         # Normalize to [0, 1] and then scale to [a, b]
         x = a + (b - a) * (val / lcg_m)
         uniform_samples.append(x)
-    
-    # Use only the required number of samples
-    uniform_samples = uniform_samples[:num_samples]
     
     # Evaluate function at each sample point
     function_values = [func(x) for x in uniform_samples]
@@ -74,9 +72,6 @@ def main():
     a = math.e
     b = math.pi
     
-    # List of sample sizes to try
-    sample_sizes = [1000, 5000]
-    
     # Calculate analytical solution
     exact_value = analytical_solution()
     print(f"Analytical solution: {exact_value:.10f}")
@@ -84,19 +79,16 @@ def main():
     print("\nMonte Carlo Integration Results:")
     print(f"{'Sample Size':<15}{'Estimate':<20}{'Absolute Error':<20}{'Relative Error (%)':<20}")
     
-    # Perform Monte Carlo integration with different sample sizes
-    results = []
-    for n in sample_sizes:
-        estimate, samples, _ = monte_carlo_integration(f, a, b, n)
-        abs_error = abs(estimate - exact_value)
-        rel_error = abs_error / exact_value * 100
-        
-        results.append((n, estimate, abs_error, rel_error))
-        print(f"{n:<15}{estimate:<20.10f}{abs_error:<20.10f}{rel_error:<20.6f}")
+    # Perform Monte Carlo integration with 1000 samples
+    estimate, samples, _ = monte_carlo_integration(f, a, b)
+    abs_error = abs(estimate - exact_value)
+    rel_error = abs_error / exact_value * 100
+    
+    print(f"{1000:<15}{estimate:<20.10f}{abs_error:<20.10f}{rel_error:<20.6f}")
 
     print("\nConclusion:")
-    print(f"The integral ∫[e to π] (x(ln(x)+e²))dx ≈ {results[-1][1]:.10f}")
-    print(f"With {sample_sizes[-1]} samples, relative error: {results[-1][3]:.6f}%")
+    print(f"The integral ∫[e to π] (x(ln(x)+e²))dx ≈ {estimate:.10f}")
+    print(f"With 1000 samples, relative error: {rel_error:.6f}%")
 
 if __name__ == "__main__":
     main()
