@@ -1,0 +1,7 @@
+Monte Karlo užduotis
+1. Sugeneruotkite pseudoatsitikitnių skaičių sekas tiesiniu kongruentiniu metodu su maksimaliu periodu, kai modulis m=776. Daugiklius a parinkite taip, kad galingumai būtų didžiausi. Prieauglio c parinkimui naudokitės gretimų narių koreliacija (teoriniai testai.
+2. Gautą seką patikrinkite serijų testu trejetams, kai d=2.
+3. Nauodami sugeneruotą geresniąją pseudoatsitiktinių skaičių seką sumodeliuokite du atsitiktinius dydžius, vieną turintį F skirstinį su 2 ir 3 laisvės laipsniais, o kitą parinkite patys.
+4. Naudodami sugeneruotą geresniąją pseudoatsitiktinių skaičių seką ir parinkdami tankius (tolyiai pasiskirsčiusio intervale [1, pi] atsitiktinio dydžio ir kitą savo nuožiūra) suskaičiuokite integralą nuo 1 iki pi (x(ln(x)+e^2))dx.
+
+Šiuo testu tikrinamas sekos gretimų porų tolygumas ir nepriklausomumas. Paskaičiuojama kiek kartų yra sutinkama pora ( Y_(2k), Y_(2k+1) ) = (q, s), 0 ≤ k < n. Čia q ir s gali įgyti bet kurias reikšmes nuo 0 iki d-1. Po to taikomas X^2 (Chi kvadrato) kriterijus su r = d^2 (galimų skirtingų porų skaičius) ir lygiomis tikimybėmis p_i = 1/d^2.

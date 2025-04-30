@@ -21,17 +21,14 @@ def frequency_test(sequence, alpha=0.05):
     # Convert 0/1 to -1/1 and compute sum
     s = sum(2*bit - 1 for bit in sequence)
     
-    # Compute test statistic
-    s_obs = abs(s) / math.sqrt(n)
-    
     # Compute p-value (using complementary error function)
-    p_value = math.erfc(s_obs / math.sqrt(2))
+    p_value = math.erfc((abs(s) / math.sqrt(n)) / math.sqrt(2))
     
     # Conclusion
     conclusion = "Fail to reject null hypothesis" if p_value > alpha else "Reject null hypothesis"
     
     return {
-        "statistic": s_obs,
+        "statistic": abs(s) / math.sqrt(n),
         "p_value": p_value,
         "conclusion": conclusion
     }
@@ -217,8 +214,8 @@ def test_c_correlation(a, m, valid_c_values, num_tests=50, seed=1):
     return c_correlations
 
 def main():
-    m = 776
-    print(f"Modulis m = {m} = 2^3 * 97")
+    m = 1107
+    print(f"Modulis m = {m} = 3^3 * 41")
     print("\nIeškome daugiklio 'a' su maksimaliu periodu ir galingumu:")
     
     valid_a_values = []
@@ -231,10 +228,10 @@ def main():
         if gcd(a, m) == 1:
             b = a - 1
             # Check if b satisfies our conditions
-            # For m = 776 = 2^3 * 97:
-            # b should be divisible by both 2 and 97
-            # Also, since m is divisible by 8 (2^3), b should be divisible by 4
-            if b % 2 == 0 and b % 97 == 0 and b % 4 == 0:
+            # For m = 1107 = 3^3 * 41:
+            # b should be divisible by both 3 and 41
+            # Also, since m is divisible by 27 (3^3), b should be divisible by 9
+            if b % 3 == 0 and b % 41 == 0 and b % 9 == 0:
                 power = find_power(a, m)
                 valid_a_values.append((a, b, power))
                 print(f"Patikrinta a={a}, b={b}, galingumas={power}")
@@ -282,8 +279,7 @@ def main():
         print(f"m = {m}")
         print(f"LCG formulė: X_n+1 = ({best_a} * X_n + {best_c}) mod {m}")
         
-        # Generate and display the first 10 pseudorandom numbers
-        seed = 1  # Initial seed value
+        seed = 1
         sequence = generate_lcg_sequence(best_a, best_c, m, seed, length=5)
         
         print("\nPirmieji 5 sugeneruotų pseudoatsitiktinių skaičių:")
