@@ -4,16 +4,6 @@ import numpy as np
 import scipy.stats as stats
 
 def frequency_test(sequence, alpha=0.05):
-    """
-    Perform the Frequency (Monobit) Test on a binary sequence.
-    
-    Parameters:
-        sequence (list): A list of integers (0 or 1) representing the binary sequence.
-        alpha (float): Significance level for the test (default is 0.05).
-    
-    Returns:
-        dict: A dictionary containing the test results.
-    """
     n = len(sequence)
     if n == 0:
         raise ValueError("Sequence cannot be empty")
@@ -34,26 +24,6 @@ def frequency_test(sequence, alpha=0.05):
     }
 
 def serial_test_triplets(sequence, alpha=0.05):
-    """
-    Perform the Serial Test for non-overlapping triplets (m=3) on a binary sequence (modulo 2).
-    
-    This implementation follows the book's description, using independent groups
-    of three elements (Y_3k, Y_3k+1, Y_3k+2) rather than overlapping triplets.
-    
-    Parameters:
-        sequence (list): A list of integers (0 or 1) representing the binary sequence.
-        alpha (float): Significance level for the test (default is 0.05).
-    
-    Returns:
-        dict: A dictionary containing the test results:
-            - chi_squared: The Chi-squared statistic.
-            - degrees_of_freedom: Degrees of freedom for the test.
-            - p_value: The p-value of the test.
-            - conclusion: Test conclusion based on the significance level.
-            - observed_counts: Observed frequencies of triplets.
-            - expected_count: Expected frequency for each triplet.
-            - reliability: Assessment of test reliability based on expected counts.
-    """
     # Validate input
     if not all(x in [0, 1] for x in sequence):
         raise ValueError("Sequence must contain only 0s and 1s.")
@@ -105,7 +75,6 @@ def serial_test_triplets(sequence, alpha=0.05):
     }
 
 def prime_factorization(n):
-    """Find prime factorization of a number n."""
     factors = {}
     d = 2
     while d*d <= n:
