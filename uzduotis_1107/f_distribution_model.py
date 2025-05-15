@@ -124,7 +124,7 @@ def plot_f_distribution(f_values, v1, v2):
     plot_values = [x for x in f_values if x <= max_display]
     
     # Plot histogram
-    hist, bins, _ = plt.hist(plot_values, bins=50, density=True, alpha=0.6, 
+    hist, bins, _ = plt.hist(plot_values, bins=100, density=True, alpha=0.6, 
                              label='Generated F-distribution')
     
     # Plot theoretical F-distribution PDF
