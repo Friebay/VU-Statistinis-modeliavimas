@@ -61,7 +61,7 @@ def visualize_graph(edges: List[Tuple[int, int]], num_vertices: int, transition_
     
     # Nubrėžti grafą
     plt.figure(figsize=(10, 8))
-    pos = nx.spring_layout(G, seed=123)  # Išdėstyti viršūnes naudojant spyruoklinį išdėstymo algoritmą su fiksuota sėkla
+    pos = nx.spring_layout(G, seed=123)
     
     # Nubrėžti viršūnes
     nx.draw_networkx_nodes(G, pos, node_color='lightblue', node_size=700)
@@ -131,41 +131,8 @@ def main():
     # Vizualizuoti grafą
     print("\n3 žingsnis: Markovo grandinės grafo vizualizavimas")
     print("-------------------------------------------------")
-    print("(Grafo vizualizacija pasirodys - uždarykite ją, kad tęsti)")
     visualize_graph(edges, len(vertices), transition_matrix)
     
-    # Imituoti daug grandinių, kad patikrinti būsenų pasiskirstymą
-    print("\n4 žingsnis: Ilgalaikio elgesio analizė")
-    print("-------------------------------------------------")
-    print("Imituojama 1000 grandinių, kurių ilgis 5, siekiant rasti stacionarųjį pasiskirstymą...")
-    
-    np.random.seed(None)  # Atstatyti sėklą atsitiktinėms simuliacijoms
-    num_simulations = 1000
-    chain_length = 5
-    final_states = []
-    
-    for _ in range(num_simulations):
-        chain = generate_markov_chain(transition_matrix, starting_state, chain_length)
-        final_states.append(chain[-1])
-    
-    # Skaičiuoti kiekvienos būsenos dažnį
-    state_counts = {}
-    for state in range(1, len(vertices) + 1):
-        count = final_states.count(state)
-        state_counts[state] = count / num_simulations
-    
-    print("\nIlgalaikis būsenų dažnio pasiskirstymas:")
-    for state, prob in state_counts.items():
-        print(f"v_{state}: {prob:.4f}")
-    
-    # Identifikuoti absorbuojančias būsenas
-    absorbing_states = []
-    for i in range(len(vertices)):
-        if np.sum(transition_matrix[i]) < 1e-10:
-            absorbing_states.append(i + 1)
-    
-    print(f"\nIdentifikuotos absorbuojančios būsenos: {', '.join([f'v_{s}' for s in absorbing_states])}")
-    print("Grandinė galiausiai įstrigs vienoje iš šių būsenų.")
 
 if __name__ == "__main__":
     main()
