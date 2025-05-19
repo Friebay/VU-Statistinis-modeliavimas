@@ -5,16 +5,6 @@ from typing import List, Dict, Tuple
 import random
 
 def create_transition_matrix(edges: List[Tuple[int, int]], num_vertices: int) -> np.ndarray:
-    """
-    Create a transition probability matrix from a list of edges.
-    
-    Args:
-        edges: List of tuples representing directed edges (from_vertex, to_vertex)
-        num_vertices: Number of vertices in the graph
-    
-    Returns:
-        Transition probability matrix
-    """
     # Initialize transition matrix with zeros
     transition_matrix = np.zeros((num_vertices, num_vertices))
     
@@ -36,17 +26,6 @@ def create_transition_matrix(edges: List[Tuple[int, int]], num_vertices: int) ->
     return transition_matrix
 
 def generate_markov_chain(transition_matrix: np.ndarray, starting_state: int, num_steps: int) -> List[int]:
-    """
-    Generate a Markov chain using the given transition matrix.
-    
-    Args:
-        transition_matrix: The transition probability matrix
-        starting_state: Initial state (0-indexed)
-        num_steps: Number of steps to simulate
-        
-    Returns:
-        List of states in the Markov chain
-    """
     num_states = transition_matrix.shape[0]
     chain = [starting_state]
     
@@ -71,14 +50,6 @@ def generate_markov_chain(transition_matrix: np.ndarray, starting_state: int, nu
     return [state + 1 for state in chain]
 
 def visualize_graph(edges: List[Tuple[int, int]], num_vertices: int, transition_matrix: np.ndarray) -> None:
-    """
-    Visualize the graph using NetworkX.
-    
-    Args:
-        edges: List of tuples representing directed edges
-        num_vertices: Number of vertices in the graph
-        transition_matrix: The transition probability matrix
-    """
     G = nx.DiGraph()
     
     # Add all vertices
@@ -116,9 +87,6 @@ def visualize_graph(edges: List[Tuple[int, int]], num_vertices: int, transition_
     plt.show()
 
 def main():
-    """
-    Main function to demonstrate the Markov chain generation and analysis.
-    """
     print("Markov Chain Analysis for the Given Graph")
     print("========================================")
     
