@@ -1,11 +1,9 @@
-# failas: c:\Users\zabit\Documents\GitHub\VU-Statistinis-modeliavimas\uzduotis_mcmc\generating_markov.py
 import numpy as np
 import matplotlib.pyplot as plt
 import networkx as nx
-from typing import List, Dict, Tuple
-import random
+from typing import List, Tuple
 
-def create_transition_matrix(edges: List[Tuple[int, int]], num_vertices: int) -> np.ndarray:
+def create_transition_matrix(edges: List[Tuple[int, int]], num_vertices: int):
     # Pradinė matrica su nuliais
     transition_matrix = np.zeros((num_vertices, num_vertices))
     
@@ -49,7 +47,7 @@ def generate_markov_chain(transition_matrix: np.ndarray, starting_state: int, nu
     # Konvertuoti į 1-indeksuotą išvedimą
     return [state + 1 for state in chain]
 
-def visualize_graph(edges: List[Tuple[int, int]], num_vertices: int, transition_matrix: np.ndarray) -> None:
+def visualize_graph(edges: List[Tuple[int, int]], num_vertices: int, transition_matrix: np.ndarray):
     G = nx.DiGraph()
     
     # Pridėti visas viršūnes
@@ -83,55 +81,36 @@ def visualize_graph(edges: List[Tuple[int, int]], num_vertices: int, transition_
     
     plt.title("Markovo grandinės grafo vizualizacija")
     plt.axis('off')
-    plt.savefig("markov_chain_graph.png")
     plt.show()
 
-def main():
-    print("Markovo grandinės analizė pateiktam grafui")
-    print("========================================")
-    
+def main():  
     # Apibrėžti grafą pagal uždavinio sąlygą
-    vertices = [1, 2, 3, 4, 5]  # v₁, v₂, v₃, v₄, v₅
+    vertices = [1, 2, 3, 4, 5]
     edges = [(1, 2), (1, 3), (1, 4), (1, 5), (2, 3), (4, 5)]
     
-    print("Grafo struktūra:")
-    print(f"Viršūnės: S = {{v₁, v₂, v₃, v₄, v₅}}")
-    print(f"Briaunos: E = {{〈v₁, v₂〉, 〈v₁, v₃〉, 〈v₁, v₄〉, 〈v₁, v₅〉, 〈v₂, v₃〉, 〈v₄, v₅〉}}")
-    print("\nPastaba: Perėjimai atliekami su vienoda tikimybe į visus kaimynus.")
+    print("Duota:")
+    print(f"Viršūnės: S = {{v1, v2, v3, v4, v5}}")
+    print(f"Briaunos: E = {{〈v1, v2〉, 〈v1, v3〉, 〈v1, v4〉, 〈v1, v5〉, 〈v2, v3〉, 〈v4, v5〉}}")
+    print("\nPerėjimai atliekami su vienoda tikimybe į visus kaimynus.")
     
     # Sukurti perėjimo matricą
     transition_matrix = create_transition_matrix(edges, len(vertices))
     
-    print("\n1 žingsnis: Perėjimo tikimybių matricos skaičiavimas")
     print("-------------------------------------------------")
-    print("Eilutės atitinka šaltinio viršūnes, stulpeliai atitinka paskirties viršūnes.")
+
     print("Perėjimo tikimybių matrica:")
-    print("     | v₁   | v₂   | v₃   | v₄   | v₅   |")
+    print("     | v1   | v2   | v3   | v4   | v5   |")
     print("-----|------|------|------|------|------|")
     for i, row in enumerate(transition_matrix):
-        row_str = f" v₁{i+1} | " + " | ".join([f"{prob:.2f}" for prob in row]) + " |"
-        print(row_str)      # Generuoti kelias Markovo grandines
-    starting_state = 0  # Pradėti nuo v₁ (0-indeksuota)
-    num_steps = 5
-    num_samples = 4
-    print(f"\n2 žingsnis: Generuojamos {num_samples} pavyzdinės Markovo grandinės (kiekvieną sudaro {num_steps} žingsniai)")
-    print("-------------------------------------------------")
-    
-    # Nustatyti sėklą atkartojamumui, bet gauti skirtingas grandines
-    np.random.seed(42)
-    
-    for i in range(num_samples):
-        chain = generate_markov_chain(transition_matrix, starting_state, num_steps)
-        
-        # Atvaizduoti grandinę
-        print(f"\nMarkovo grandinė {i+1} prasidedanti nuo v₁:")
-        chain_str = " → ".join([f"v_{state}" for state in chain])
-        print(chain_str)
-    
+        row_str = f"  v{i+1} |"
+        for prob in row:
+            row_str += f" {prob:.2f} |"
+        print(row_str)
+
     # Vizualizuoti grafą
-    print("\n3 žingsnis: Markovo grandinės grafo vizualizavimas")
+    print("\nMarkovo grandinės grafo vizualizavimas")
     print("-------------------------------------------------")
-    visualize_graph(edges, len(vertices), transition_matrix)
+    # visualize_graph(edges, len(vertices), transition_matrix)
     
 
 if __name__ == "__main__":

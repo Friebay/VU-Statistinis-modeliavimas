@@ -3,24 +3,6 @@ from math import gcd
 import numpy as np
 import scipy.stats as stats
 
-def frequency_test(sequence, alpha=0.05):
-    n = len(sequence)
-    
-    # Konvertuoti 0/1 į -1/1 ir apskaičiuoti sumą
-    s = sum(2*bit - 1 for bit in sequence)
-    
-    # Apskaičiuoti p-reikšmę (naudojant papildomą klaidos funkciją)
-    p_value = math.erfc((abs(s) / math.sqrt(n)) / math.sqrt(2))
-    
-    # Išvada
-    conclusion = "Nepavyko atmesti nulinės hipotezės" if p_value > alpha else "Atmesti nulinę hipotezę"
-    
-    return {
-        "statistic": abs(s) / math.sqrt(n),
-        "p_value": p_value,
-        "conclusion": conclusion
-    }
-
 def serial_test_triplets(sequence, alpha=0.05):
     # Patikrinti įvestį
     if not all(x in [0, 1] for x in sequence):
@@ -62,6 +44,92 @@ def serial_test_triplets(sequence, alpha=0.05):
         "conclusion": conclusion,
         "observed_counts": observed_counts,
         "expected_count": expected_count
+    }
+
+def monotonicity_test(sequence, alpha=0.05):
+    """
+    Tests the sequence for monotonic patterns (increasing or decreasing runs).
+    
+    In a truly random sequence, the number of increasing and decreasing runs
+    should follow a specific distribution. This test compares the observed
+    number of runs against the expected distribution.
+    
+    Args:
+        sequence: List of integers or floats to test
+        alpha: Significance level (default: 0.05)
+        
+    Returns:
+        Dictionary with test results
+    """
+    if len(sequence) < 10:
+        raise ValueError("Sequence length must be at least 10 for meaningful results")
+    
+    # Count increasing and decreasing runs
+    increasing_runs = 0
+    decreasing_runs = 0
+    current_run = None
+    run_length = 1
+    
+    for i in range(1, len(sequence)):
+        if sequence[i] > sequence[i-1]:  # Increasing
+            if current_run == "increasing":
+                run_length += 1
+            else:
+                if current_run == "decreasing" and run_length >= 3:
+                    decreasing_runs += 1
+                current_run = "increasing"
+                run_length = 2
+        elif sequence[i] < sequence[i-1]:  # Decreasing
+            if current_run == "decreasing":
+                run_length += 1
+            else:
+                if current_run == "increasing" and run_length >= 3:
+                    increasing_runs += 1
+                current_run = "decreasing"
+                run_length = 2
+        else:  # Equal, end any current run
+            if current_run == "increasing" and run_length >= 3:
+                increasing_runs += 1
+            elif current_run == "decreasing" and run_length >= 3:
+                decreasing_runs += 1
+            current_run = None
+            run_length = 1
+    
+    # Don't forget to count the last run
+    if current_run == "increasing" and run_length >= 3:
+        increasing_runs += 1
+    elif current_run == "decreasing" and run_length >= 3:
+        decreasing_runs += 1
+    
+    # Compute total runs (of length 3 or more)
+    total_runs = increasing_runs + decreasing_runs
+    
+    # Expected number of runs for a random sequence
+    # This is based on the theory that in a random sequence of length n,
+    # the expected number of runs of length k or longer is approximately:
+    # E[R_k] = (n-k+2) * 2 / (k+1)!
+    n = len(sequence)
+    k = 3  # We're counting runs of length 3 or more
+    expected_runs = (n-k+2) * 2 / math.factorial(k+1)
+    
+    # Using Poisson approximation for the distribution of runs
+    # Calculate p-value using chi-square with 1 degree of freedom
+    # This is a simplification - a more rigorous approach would use 
+    # the exact distribution of runs statistic
+    chi_squared = ((total_runs - expected_runs) ** 2) / expected_runs
+    p_value = 1 - stats.chi2.cdf(chi_squared, df=1)
+    
+    # Conclusion
+    conclusion = "Nepavyko atmesti nulinės hipotezės" if p_value > alpha else "Atmetame nulinę hipotezę"
+    
+    return {
+        "increasing_runs": increasing_runs,
+        "decreasing_runs": decreasing_runs,
+        "total_runs": total_runs,
+        "expected_runs": expected_runs,
+        "chi_squared": chi_squared,
+        "p_value": p_value,
+        "conclusion": conclusion
     }
 
 def prime_factorization(n):
@@ -277,18 +345,20 @@ def main():
         print(f"Chi-kvadrato statistika: {serial_test_results['chi_squared']:.4f}")
         print(f"Laisvės laipsniai: {serial_test_results['degrees_of_freedom']}")
         print(f"P-reikšmė: {serial_test_results['p_value']:.4f}")
-        print(f"Išvada: {serial_test_results['conclusion']}")
-        print("\nStebėti skaičiai:")
-        for triplet, count in serial_test_results['observed_counts'].items():
-            print(f"{triplet}: {count}")
-        print(f"Tikėtinas kiekvieno tripleto skaičius: {serial_test_results['expected_count']:.4f}")        # Atlikti dažnio (Monobit) testą
-        frequency_test_results = frequency_test(binary_sequence, alpha)
+        print(f"Išvada: {serial_test_results['conclusion']}")        
         
-        # Spausdinti dažnio testo rezultatus
-        print("\nDažnio (Monobit) testo rezultatai:")
-        print(f"Testo statistika: {frequency_test_results['statistic']:.4f}")
-        print(f"P-reikšmė: {frequency_test_results['p_value']:.4f}")
-        print(f"Išvada: {frequency_test_results['conclusion']}")
+        # Atlikti monotoniškumo testą
+        monotonicity_test_results = monotonicity_test(long_sequence, alpha)
+        
+        # Spausdinti monotoniškumo testo rezultatus
+        print("\nMonotoniškumo testo rezultatai:")
+        print(f"Didėjančios sekos: {monotonicity_test_results['increasing_runs']}")
+        print(f"Mažėjančios sekos: {monotonicity_test_results['decreasing_runs']}")
+        print(f"Iš viso sekų: {monotonicity_test_results['total_runs']}")
+        print(f"Tikėtinas sekų skaičius: {monotonicity_test_results['expected_runs']:.4f}")
+        print(f"Chi-kvadrato statistika: {monotonicity_test_results['chi_squared']:.4f}")
+        print(f"P-reikšmė: {monotonicity_test_results['p_value']:.4f}")
+        print(f"Išvada: {monotonicity_test_results['conclusion']}")
 
     else:
         print("Nerasta tinkamų daugiklio 'a' reikšmių.")
