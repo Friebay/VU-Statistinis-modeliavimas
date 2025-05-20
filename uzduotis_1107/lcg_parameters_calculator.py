@@ -3,6 +3,20 @@ from math import gcd
 import numpy as np
 import scipy.stats as stats
 
+
+def calculate_theoretical_correlation(a, c, m):
+    """
+    Calculate the theoretical correlation between adjacent elements using the formula:
+    C ≈ (1/a) * (1 - 6(c/m) + 6(c/m)²)
+    
+    The error of this formula is less than (a+6)/m
+    """
+    c_m_ratio = c / m
+    correlation = (1/a) * (1 - 6 * c_m_ratio + 6 * (c_m_ratio ** 2))
+    error_bound = (a + 6) / m
+    
+    return abs(correlation), error_bound
+
 def serial_test_triplets(sequence, alpha=0.05):
     # Generuoti nepersidengiančius trejetus iš sekos pagal užduoties aprašymą
     # Imame grupėmis po 3 elementus: (Y_0, Y_1, Y_2), (Y_3, Y_4, Y_5), ...
@@ -25,7 +39,7 @@ def serial_test_triplets(sequence, alpha=0.05):
     
     # Laisvės laipsniai
     degrees_of_freedom = len(possible_triplets) - 1  # 8 - 1 = 7
-      # Apskaičiuoti p-reikšmę
+    # Apskaičiuoti p-reikšmę
     p_value = 1 - stats.chi2.cdf(chi_squared, degrees_of_freedom)
 
     return {
@@ -164,45 +178,19 @@ def generate_lcg_sequence(a, c, m, seed, length=1000):
     
     return sequence
 
-def calculate_correlation(sequence):
-    """Apskaičiuoti koreliaciją tarp gretimų sekos narių."""
-    # Normalizuoti seką į [0,1] diapazoną tinkamam statistiniam analizui
-    normalized = [x / (len(sequence) - 1) for x in sequence]
+def test_c_correlation(a, m, valid_c_values, num_tests=50):
+    """Calculate theoretical correlation for different c values."""
+    c_theoretical_correlations = []
     
-    # Apskaičiuoti koreliaciją tarp nuoseklių narių
-    x = normalized[:-1]  # Visi, išskyrus paskutinį elementą
-    y = normalized[1:]   # Visi, išskyrus pirmą elementą
+    for c in valid_c_values[:num_tests]:
+        # Only theoretical correlation
+        theoretical_correlation, error_bound = calculate_theoretical_correlation(a, c, m)
+        c_theoretical_correlations.append((c, theoretical_correlation, error_bound))
     
-    # Apskaičiuoti Pearson koreliacijos koeficientą
-    x_mean = sum(x) / len(x)
-    y_mean = sum(y) / len(y)
+    # Sort by theoretical correlation (lower is better)
+    c_theoretical_correlations.sort(key=lambda x: x[1])
     
-    numerator = sum((x[i] - x_mean) * (y[i] - y_mean) for i in range(len(x)))
-    denominator_x = sum((val - x_mean) ** 2 for val in x)
-    denominator_y = sum((val - y_mean) ** 2 for val in y)
-    
-    # Išvengti dalybos iš nulio
-    if denominator_x == 0 or denominator_y == 0:
-        return 1.0  # Grąžinti aukštą koreliaciją, jei įvyktų dalyba iš nulio
-    
-    correlation = numerator / (math.sqrt(denominator_x) * math.sqrt(denominator_y))
-    
-    # Grąžinti absoliučią reikšmę, nes norime minimalios koreliacijos nepriklausomai nuo krypties
-    return abs(correlation)
-
-def test_c_correlation(a, m, valid_c_values, num_tests=50, seed=1):
-    """Išbandyti skirtingas c reikšmes ir rasti tą, kuri turi minimalią gretimų narių koreliaciją."""
-    c_correlations = []
-    
-    for c in valid_c_values[:num_tests]:  # Išbandyti poaibį reikšmių, kad sutaupytume laiko
-        sequence = generate_lcg_sequence(a, c, m, seed)
-        correlation = calculate_correlation(sequence)
-        c_correlations.append((c, correlation))
-    
-    # Rūšiuoti pagal koreliaciją (mažesnė yra geresnė)
-    c_correlations.sort(key=lambda x: x[1])
-    
-    return c_correlations
+    return c_theoretical_correlations
 
 def main():
     m = 1107
@@ -244,18 +232,20 @@ def main():
     # Rasti tinkamas c reikšmes
     valid_c_values = find_valid_c(m)
     
-    # Testuoti c reikšmes dėl koreliacijos
-    c_correlations = test_c_correlation(best_a, m, valid_c_values)
+    theoretical_correlations = test_c_correlation(best_a, m, valid_c_values)
+
+    print("\n=== Teorinės koreliacijos rezultatai ===")
+    print(f"{'c reikšmė':<15}{'Teorinė koreliacija':<22}{'Paklaidos riba':<15}")
+    for c, corr, error in theoretical_correlations[:3]:  # Rodyti 3 geriausius rezultatus
+        print(f"{c:<15}{corr:.6f}{error:.6f}")
     
-    print(f"\n{'c reikšmė':<15}{'Koreliacija':<15}")
-    for c, corr in c_correlations[:3]:  # Rodyti 3 geriausius rezultatus
-        print(f"{c:<15}{corr:.6f}")
+    # Geriausia c reikšmė pagal teorinę formulę
+    best_c_theo, best_corr_theo, error_bound = theoretical_correlations[0]
     
-    # Geriausia c reikšmė (su minimalia koreliacija)
-    best_c, best_corr = c_correlations[0]
+    print("\nUžduočiai naudosime (pagal teorinę formulę):")
+    print(f"c = {best_c_theo} (teorinė koreliacija: {best_corr_theo:.6f}, paklaidos riba: {error_bound:.6f})")
     
-    print("\nUžduočiai naudosime:")
-    print(f"c = {best_c} (koreliacija: {best_corr:.6f})")
+    best_c = best_c_theo
     
     print("\nPilni tiesinio kongruentinio metodo parametrai:")
     print(f"a = {best_a}")
