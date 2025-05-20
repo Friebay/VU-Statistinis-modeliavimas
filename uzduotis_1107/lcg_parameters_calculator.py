@@ -54,11 +54,9 @@ def monotonicity_test(sequence, debug=False):
     Test the monotonicity of a sequence by analyzing runs of increasing and decreasing values.
     A run is defined as a maximal monotone subsequence (continuously increasing or decreasing).
     
-    This implementation uses a direct single-pass approach to correctly identify runs of all lengths.
-    
     Parameters:
     sequence -- The sequence to analyze
-    debug -- If True, prints detailed information about each run found
+    debug -- Parameter kept for backward compatibility but no longer used
     """
     if len(sequence) < 2:
         return {
@@ -69,19 +67,16 @@ def monotonicity_test(sequence, debug=False):
             "chi_squared": 0,
             "p_value": 1.0
         }
-      # Initialize run counting
+    # Initialize run counting
     increasing_runs = {1: 0, 2: 0, 3: 0, '>3': 0}
     decreasing_runs = {1: 0, 2: 0, 3: 0, '>3': 0}
-    
-    # Debug storage for runs
-    if debug:
-        all_runs = []
     
     # Initialize variables for run tracking
     current_run_type = None  # Can be "increasing", "decreasing", or None
     run_length = 1  # Start with a run of length 1 (single element)
     run_start_idx = 0
-      # Process the sequence
+    
+    # Process the sequence
     for i in range(1, len(sequence)):
         if sequence[i] > sequence[i-1]:
             # Current pair is increasing
@@ -92,24 +87,16 @@ def monotonicity_test(sequence, debug=False):
                 # End previous run if it exists
                 if current_run_type == "decreasing":
                     # Record the decreasing run that just ended
-                    if run_length == 1:
+                    # Adjust run length to represent number of comparisons (elements - 1)
+                    adjusted_length = run_length - 1
+                    if adjusted_length == 1:
                         decreasing_runs[1] += 1
-                    elif run_length == 2:
+                    elif adjusted_length == 2:
                         decreasing_runs[2] += 1
-                    elif run_length == 3:
+                    elif adjusted_length == 3:
                         decreasing_runs[3] += 1
-                    else:  # run_length > 3
+                    else:  # adjusted_length > 3
                         decreasing_runs['>3'] += 1
-                    
-                    if debug:
-                        run_end_idx = i - 1
-                        all_runs.append({
-                            "type": "decreasing",
-                            "length": run_length,
-                            "start_idx": run_start_idx,
-                            "end_idx": run_end_idx,
-                            "values": sequence[run_start_idx:run_end_idx+1]
-                        })
                 
                 # Start a new increasing run
                 current_run_type = "increasing"
@@ -125,24 +112,16 @@ def monotonicity_test(sequence, debug=False):
                 # End previous run if it exists
                 if current_run_type == "increasing":
                     # Record the increasing run that just ended
-                    if run_length == 1:
+                    # Adjust run length to represent number of comparisons (elements - 1)
+                    adjusted_length = run_length - 1
+                    if adjusted_length == 1:
                         increasing_runs[1] += 1
-                    elif run_length == 2:
+                    elif adjusted_length == 2:
                         increasing_runs[2] += 1
-                    elif run_length == 3:
+                    elif adjusted_length == 3:
                         increasing_runs[3] += 1
-                    else:  # run_length > 3
+                    else:  # adjusted_length > 3
                         increasing_runs['>3'] += 1
-                    
-                    if debug:
-                        run_end_idx = i - 1
-                        all_runs.append({
-                            "type": "increasing",
-                            "length": run_length,
-                            "start_idx": run_start_idx,
-                            "end_idx": run_end_idx,
-                            "values": sequence[run_start_idx:run_end_idx+1]
-                        })
                 
                 # Start a new decreasing run
                 current_run_type = "decreasing"
@@ -154,93 +133,62 @@ def monotonicity_test(sequence, debug=False):
             # For the purpose of this test, we'll end any current run
             if current_run_type == "increasing":
                 # Record the increasing run
-                if run_length == 1:
+                # Adjust run length to represent number of comparisons (elements - 1)
+                adjusted_length = run_length - 1
+                if adjusted_length == 1:
                     increasing_runs[1] += 1
-                elif run_length == 2:
+                elif adjusted_length == 2:
                     increasing_runs[2] += 1
-                elif run_length == 3:
+                elif adjusted_length == 3:
                     increasing_runs[3] += 1
-                else:  # run_length > 3
+                else:  # adjusted_length > 3
                     increasing_runs['>3'] += 1
                 
-                if debug:
-                    run_end_idx = i - 1
-                    all_runs.append({
-                        "type": "increasing",
-                        "length": run_length,
-                        "start_idx": run_start_idx,
-                        "end_idx": run_end_idx,
-                        "values": sequence[run_start_idx:run_end_idx+1]
-                    })
-                    
                 # Reset run tracking
                 current_run_type = None
                 run_length = 1
                 
             elif current_run_type == "decreasing":
                 # Record the decreasing run
-                if run_length == 1:
+                # Adjust run length to represent number of comparisons (elements - 1)
+                adjusted_length = run_length - 1
+                if adjusted_length == 1:
                     decreasing_runs[1] += 1
-                elif run_length == 2:
+                elif adjusted_length == 2:
                     decreasing_runs[2] += 1
-                elif run_length == 3:
+                elif adjusted_length == 3:
                     decreasing_runs[3] += 1
-                else:  # run_length > 3
+                else:  # adjusted_length > 3
                     decreasing_runs['>3'] += 1
                 
-                if debug:
-                    run_end_idx = i - 1
-                    all_runs.append({
-                        "type": "decreasing",
-                        "length": run_length,
-                        "start_idx": run_start_idx,
-                        "end_idx": run_end_idx,
-                        "values": sequence[run_start_idx:run_end_idx+1]
-                    })
-                    
                 # Reset run tracking
                 current_run_type = None
                 run_length = 1
-      # Don't forget to count the last run
+    
+    # Don't forget to count the last run
     if current_run_type == "increasing":
-        if run_length == 1:
+        # Adjust run length to represent number of comparisons (elements - 1)
+        adjusted_length = run_length - 1
+        if adjusted_length == 1:
             increasing_runs[1] += 1
-        elif run_length == 2:
+        elif adjusted_length == 2:
             increasing_runs[2] += 1
-        elif run_length == 3:
+        elif adjusted_length == 3:
             increasing_runs[3] += 1
-        else:  # run_length > 3
+        else:  # adjusted_length > 3
             increasing_runs['>3'] += 1
             
-        if debug:
-            run_end_idx = len(sequence) - 1
-            all_runs.append({
-                "type": "increasing",
-                "length": run_length,
-                "start_idx": run_start_idx,
-                "end_idx": run_end_idx,
-                "values": sequence[run_start_idx:run_end_idx+1]
-            })
-            
     elif current_run_type == "decreasing":
-        if run_length == 1:
+        # Adjust run length to represent number of comparisons (elements - 1)
+        adjusted_length = run_length - 1
+        if adjusted_length == 1:
             decreasing_runs[1] += 1
-        elif run_length == 2:
+        elif adjusted_length == 2:
             decreasing_runs[2] += 1
-        elif run_length == 3:
+        elif adjusted_length == 3:
             decreasing_runs[3] += 1
-        else:  # run_length > 3
+        else:  # adjusted_length > 3
             decreasing_runs['>3'] += 1
-            
-        if debug:
-            run_end_idx = len(sequence) - 1
-            all_runs.append({
-                "type": "decreasing",
-                "length": run_length,
-                "start_idx": run_start_idx,
-                "end_idx": run_end_idx,
-                "values": sequence[run_start_idx:run_end_idx+1]
-            })
     
     # Calculate total runs for each length
     total_runs = {}
@@ -274,46 +222,9 @@ def monotonicity_test(sequence, debug=False):
     # Calculate p-value with 4-1 = 3 degrees of freedom
     p_value = 1 - stats.chi2.cdf(chi_squared, df=3)
     
-    # Debug information
+    # Get totals for return value
     total_observed = sum(total_runs.values())
     total_expected = sum(expected_runs.values())
-    
-    # Print debug information if requested
-    if debug:
-        print("\n===== MONOTONICITY TEST DEBUG INFORMATION =====")
-        print(f"Total runs found: {len(all_runs)}")
-        print(f"Total length from counting: {total_observed}")
-        print(f"Expected total runs: {total_expected:.2f}")
-        
-        # Print count by length and type
-        print("\nRun counts by length:")
-        print(f"{'Length':<6}{'Inc':<6}{'Dec':<6}{'Total':<6}{'Expected':<10}{'Diff':<10}")
-        print("-" * 45)
-        for length in [1, 2, 3, '>3']:
-            inc = increasing_runs[length]
-            dec = decreasing_runs[length]
-            tot = total_runs[length]
-            exp = expected_runs[length]
-            diff = tot - exp
-            print(f"{length:<6}{inc:<6}{dec:<6}{tot:<6}{exp:<10.2f}{diff:<10.2f}")
-        
-        # Print the first 10 runs in detail
-        print("\nFirst 10 runs (or all if less):")
-        for i, run in enumerate(all_runs[:10]):
-            print(f"Run {i+1}: {run['type']}, length {run['length']}, " + 
-                  f"sequence[{run['start_idx']}:{run['end_idx']+1}] = {run['values']}")
-        
-        # Print sample longer runs if they exist
-        longer_runs = [run for run in all_runs if run['length'] > 3]
-        if longer_runs:
-            print("\nSample of runs with length > 3:")
-            for i, run in enumerate(longer_runs[:5]):  # Show up to 5 examples
-                print(f"Long Run {i+1}: {run['type']}, length {run['length']}, " + 
-                      f"sequence[{run['start_idx']}:{run['end_idx']+1}] = {run['values']}")
-        else:
-            print("\nNo runs with length > 3 found.")
-            
-        print("===============================================")
     
     return {
         "increasing_runs": increasing_runs,
@@ -496,9 +407,8 @@ def main():
     print("\nNuoseklumo testo trejetams rezultatai:")
     print(f"Laisvės laipsniai: {serial_test_results['degrees_of_freedom']}")
     print(f"P-reikšmė: {serial_test_results['p_value']:.4f}")     
-    
-    # Run the monotonicity test with debugging enabled
-    monotonicity_test_results = monotonicity_test(long_sequence, debug=True)
+      # Run the monotonicity test
+    monotonicity_test_results = monotonicity_test(long_sequence)
 
     print("\nMonotoniškumo testo rezultatai:")
     print(f"{'Run Length':<12}{'Observed':<12}{'Expected':<12}{'Difference':<12}")
