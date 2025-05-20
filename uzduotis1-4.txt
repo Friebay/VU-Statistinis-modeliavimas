@@ -1,5 +1,5 @@
 Monte Karlo užduotis
-1. Sugeneruotkite pseudoatsitikitnių skaičių sekas tiesiniu kongruentiniu metodu su maksimaliu periodu, kai modulis m=776. Daugiklius a parinkite taip, kad galingumai būtų didžiausi. Prieauglio c parinkimui naudokitės gretimų narių koreliacija (teoriniai testai.
+1. Sugeneruotkite pseudoatsitikitnių skaičių sekas tiesiniu kongruentiniu metodu su maksimaliu periodu, kai modulis m=1107. Daugiklius a parinkite taip, kad galingumai būtų didžiausi. Prieauglio c parinkimui naudokitės gretimų narių koreliacija (teoriniai testai).
 2. Gautą seką patikrinkite serijų testu trejetams, kai d=2.
 3. Nauodami sugeneruotą geresniąją pseudoatsitiktinių skaičių seką sumodeliuokite du atsitiktinius dydžius, vieną turintį F skirstinį su 2 ir 3 laisvės laipsniais, o kitą parinkite patys.
 4. Naudodami sugeneruotą geresniąją pseudoatsitiktinių skaičių seką ir parinkdami tankius (tolyiai pasiskirsčiusio intervale [1, pi] atsitiktinio dydžio ir kitą savo nuožiūra) suskaičiuokite integralą nuo 1 iki pi (x(ln(x)+e^2))dx.

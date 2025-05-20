@@ -17,7 +17,7 @@ def calculate_theoretical_correlation(a, c, m):
     
     return abs(correlation), error_bound
 
-def serial_test_triplets(sequence, alpha=0.05):
+def serial_test_triplets(sequence):
     # Generuoti nepersidengiančius trejetus iš sekos pagal užduoties aprašymą
     # Imame grupėmis po 3 elementus: (Y_0, Y_1, Y_2), (Y_3, Y_4, Y_5), ...
     usable_length = (len(sequence) // 3) * 3
@@ -49,62 +49,271 @@ def serial_test_triplets(sequence, alpha=0.05):
         "observed_counts": observed_counts,
         "expected_count": expected_count
     }
-
-def monotonicity_test(sequence, alpha=0.05):
-    # Count increasing and decreasing runs
-    increasing_runs = 0
-    decreasing_runs = 0
-    current_run = None
-    run_length = 1
+def monotonicity_test(sequence, debug=False):
+    """
+    Test the monotonicity of a sequence by analyzing runs of increasing and decreasing values.
+    A run is defined as a maximal monotone subsequence (continuously increasing or decreasing).
     
+    This implementation uses a direct single-pass approach to correctly identify runs of all lengths.
+    
+    Parameters:
+    sequence -- The sequence to analyze
+    debug -- If True, prints detailed information about each run found
+    """
+    if len(sequence) < 2:
+        return {
+            "increasing_runs": {1: 0, 2: 0, 3: 0, '>3': 0},
+            "decreasing_runs": {1: 0, 2: 0, 3: 0, '>3': 0},
+            "total_runs": {1: 0, 2: 0, 3: 0, '>3': 0},
+            "expected_runs": {1: 0, 2: 0, 3: 0, '>3': 0},
+            "chi_squared": 0,
+            "p_value": 1.0
+        }
+      # Initialize run counting
+    increasing_runs = {1: 0, 2: 0, 3: 0, '>3': 0}
+    decreasing_runs = {1: 0, 2: 0, 3: 0, '>3': 0}
+    
+    # Debug storage for runs
+    if debug:
+        all_runs = []
+    
+    # Initialize variables for run tracking
+    current_run_type = None  # Can be "increasing", "decreasing", or None
+    run_length = 1  # Start with a run of length 1 (single element)
+    run_start_idx = 0
+      # Process the sequence
     for i in range(1, len(sequence)):
-        if sequence[i] > sequence[i-1]:  # Increasing
-            if current_run == "increasing":
+        if sequence[i] > sequence[i-1]:
+            # Current pair is increasing
+            if current_run_type == "increasing":
+                # Continue the current increasing run
                 run_length += 1
             else:
-                if current_run == "decreasing" and run_length >= 3:
-                    decreasing_runs += 1
-                current_run = "increasing"
-                run_length = 2
-        elif sequence[i] < sequence[i-1]:  # Decreasing
-            if current_run == "decreasing":
+                # End previous run if it exists
+                if current_run_type == "decreasing":
+                    # Record the decreasing run that just ended
+                    if run_length == 1:
+                        decreasing_runs[1] += 1
+                    elif run_length == 2:
+                        decreasing_runs[2] += 1
+                    elif run_length == 3:
+                        decreasing_runs[3] += 1
+                    else:  # run_length > 3
+                        decreasing_runs['>3'] += 1
+                    
+                    if debug:
+                        run_end_idx = i - 1
+                        all_runs.append({
+                            "type": "decreasing",
+                            "length": run_length,
+                            "start_idx": run_start_idx,
+                            "end_idx": run_end_idx,
+                            "values": sequence[run_start_idx:run_end_idx+1]
+                        })
+                
+                # Start a new increasing run
+                current_run_type = "increasing"
+                run_length = 2  # Current element + previous element
+                run_start_idx = i - 1
+        
+        elif sequence[i] < sequence[i-1]:
+            # Current pair is decreasing
+            if current_run_type == "decreasing":
+                # Continue the current decreasing run
                 run_length += 1
             else:
-                if current_run == "increasing" and run_length >= 3:
-                    increasing_runs += 1
-                current_run = "decreasing"
-                run_length = 2
-        else:  # Equal, end any current run
-            if current_run == "increasing" and run_length >= 3:
-                increasing_runs += 1
-            elif current_run == "decreasing" and run_length >= 3:
-                decreasing_runs += 1
-            current_run = None
-            run_length = 1
+                # End previous run if it exists
+                if current_run_type == "increasing":
+                    # Record the increasing run that just ended
+                    if run_length == 1:
+                        increasing_runs[1] += 1
+                    elif run_length == 2:
+                        increasing_runs[2] += 1
+                    elif run_length == 3:
+                        increasing_runs[3] += 1
+                    else:  # run_length > 3
+                        increasing_runs['>3'] += 1
+                    
+                    if debug:
+                        run_end_idx = i - 1
+                        all_runs.append({
+                            "type": "increasing",
+                            "length": run_length,
+                            "start_idx": run_start_idx,
+                            "end_idx": run_end_idx,
+                            "values": sequence[run_start_idx:run_end_idx+1]
+                        })
+                
+                # Start a new decreasing run
+                current_run_type = "decreasing"
+                run_length = 2  # Current element + previous element
+                run_start_idx = i - 1
+        
+        else:  # sequence[i] == sequence[i-1]
+            # Equal values - handle as a plateau
+            # For the purpose of this test, we'll end any current run
+            if current_run_type == "increasing":
+                # Record the increasing run
+                if run_length == 1:
+                    increasing_runs[1] += 1
+                elif run_length == 2:
+                    increasing_runs[2] += 1
+                elif run_length == 3:
+                    increasing_runs[3] += 1
+                else:  # run_length > 3
+                    increasing_runs['>3'] += 1
+                
+                if debug:
+                    run_end_idx = i - 1
+                    all_runs.append({
+                        "type": "increasing",
+                        "length": run_length,
+                        "start_idx": run_start_idx,
+                        "end_idx": run_end_idx,
+                        "values": sequence[run_start_idx:run_end_idx+1]
+                    })
+                    
+                # Reset run tracking
+                current_run_type = None
+                run_length = 1
+                
+            elif current_run_type == "decreasing":
+                # Record the decreasing run
+                if run_length == 1:
+                    decreasing_runs[1] += 1
+                elif run_length == 2:
+                    decreasing_runs[2] += 1
+                elif run_length == 3:
+                    decreasing_runs[3] += 1
+                else:  # run_length > 3
+                    decreasing_runs['>3'] += 1
+                
+                if debug:
+                    run_end_idx = i - 1
+                    all_runs.append({
+                        "type": "decreasing",
+                        "length": run_length,
+                        "start_idx": run_start_idx,
+                        "end_idx": run_end_idx,
+                        "values": sequence[run_start_idx:run_end_idx+1]
+                    })
+                    
+                # Reset run tracking
+                current_run_type = None
+                run_length = 1
+      # Don't forget to count the last run
+    if current_run_type == "increasing":
+        if run_length == 1:
+            increasing_runs[1] += 1
+        elif run_length == 2:
+            increasing_runs[2] += 1
+        elif run_length == 3:
+            increasing_runs[3] += 1
+        else:  # run_length > 3
+            increasing_runs['>3'] += 1
+            
+        if debug:
+            run_end_idx = len(sequence) - 1
+            all_runs.append({
+                "type": "increasing",
+                "length": run_length,
+                "start_idx": run_start_idx,
+                "end_idx": run_end_idx,
+                "values": sequence[run_start_idx:run_end_idx+1]
+            })
+            
+    elif current_run_type == "decreasing":
+        if run_length == 1:
+            decreasing_runs[1] += 1
+        elif run_length == 2:
+            decreasing_runs[2] += 1
+        elif run_length == 3:
+            decreasing_runs[3] += 1
+        else:  # run_length > 3
+            decreasing_runs['>3'] += 1
+            
+        if debug:
+            run_end_idx = len(sequence) - 1
+            all_runs.append({
+                "type": "decreasing",
+                "length": run_length,
+                "start_idx": run_start_idx,
+                "end_idx": run_end_idx,
+                "values": sequence[run_start_idx:run_end_idx+1]
+            })
     
-    # Don't forget to count the last run
-    if current_run == "increasing" and run_length >= 3:
-        increasing_runs += 1
-    elif current_run == "decreasing" and run_length >= 3:
-        decreasing_runs += 1
+    # Calculate total runs for each length
+    total_runs = {}
+    for length in [1, 2, 3, '>3']:
+        total_runs[length] = increasing_runs[length] + decreasing_runs[length]
     
-    # Compute total runs (of length 3 or more)
-    total_runs = increasing_runs + decreasing_runs
-    
-    # Expected number of runs for a random sequence
-    # This is based on the theory that in a random sequence of length n,
-    # the expected number of runs of length k or longer is approximately:
-    # E[R_k] = (n-k+2) * 2 / (k+1)!
+    # Calculate theoretical expected values
     n = len(sequence)
-    k = 3  # We're counting runs of length 3 or more
-    expected_runs = (n-k+2) * 2 / math.factorial(k+1)
+    expected_all = (2*n + 1) / 3  # Formula from reference material
+    expected_1 = (5*n + 6) / 12   # Formula from reference material
+    expected_2 = (11*n - 3) / 60  # Formula from reference material
     
-    # Using Poisson approximation for the distribution of runs
-    # Calculate p-value using chi-square with 1 degree of freedom
-    # This is a simplification - a more rigorous approach would use 
-    # the exact distribution of runs statistic
-    chi_squared = ((total_runs - expected_runs) ** 2) / expected_runs
-    p_value = 1 - stats.chi2.cdf(chi_squared, df=1)
+    # For length 3, using the generalized formula from reference material
+    k = 3
+    expected_3 = (2*((k**2 + 3*k + 1)*n - (k**3 + 2*k**2 - 4*k - 5))) / math.factorial(k + 3)
+    
+    # For lengths > 3, calculate as the remainder to ensure total matches
+    expected_gt3 = expected_all - expected_1 - expected_2 - expected_3
+    
+    expected_runs = {
+        1: expected_1,
+        2: expected_2,
+        3: expected_3,
+        '>3': expected_gt3
+    }
+    
+    # Calculate chi-squared statistic for all run lengths
+    chi_squared = sum(((total_runs[length] - expected_runs[length])**2) / expected_runs[length] 
+                     for length in [1, 2, 3, '>3'])
+    
+    # Calculate p-value with 4-1 = 3 degrees of freedom
+    p_value = 1 - stats.chi2.cdf(chi_squared, df=3)
+    
+    # Debug information
+    total_observed = sum(total_runs.values())
+    total_expected = sum(expected_runs.values())
+    
+    # Print debug information if requested
+    if debug:
+        print("\n===== MONOTONICITY TEST DEBUG INFORMATION =====")
+        print(f"Total runs found: {len(all_runs)}")
+        print(f"Total length from counting: {total_observed}")
+        print(f"Expected total runs: {total_expected:.2f}")
+        
+        # Print count by length and type
+        print("\nRun counts by length:")
+        print(f"{'Length':<6}{'Inc':<6}{'Dec':<6}{'Total':<6}{'Expected':<10}{'Diff':<10}")
+        print("-" * 45)
+        for length in [1, 2, 3, '>3']:
+            inc = increasing_runs[length]
+            dec = decreasing_runs[length]
+            tot = total_runs[length]
+            exp = expected_runs[length]
+            diff = tot - exp
+            print(f"{length:<6}{inc:<6}{dec:<6}{tot:<6}{exp:<10.2f}{diff:<10.2f}")
+        
+        # Print the first 10 runs in detail
+        print("\nFirst 10 runs (or all if less):")
+        for i, run in enumerate(all_runs[:10]):
+            print(f"Run {i+1}: {run['type']}, length {run['length']}, " + 
+                  f"sequence[{run['start_idx']}:{run['end_idx']+1}] = {run['values']}")
+        
+        # Print sample longer runs if they exist
+        longer_runs = [run for run in all_runs if run['length'] > 3]
+        if longer_runs:
+            print("\nSample of runs with length > 3:")
+            for i, run in enumerate(longer_runs[:5]):  # Show up to 5 examples
+                print(f"Long Run {i+1}: {run['type']}, length {run['length']}, " + 
+                      f"sequence[{run['start_idx']}:{run['end_idx']+1}] = {run['values']}")
+        else:
+            print("\nNo runs with length > 3 found.")
+            
+        print("===============================================")
     
     return {
         "increasing_runs": increasing_runs,
@@ -112,7 +321,9 @@ def monotonicity_test(sequence, alpha=0.05):
         "total_runs": total_runs,
         "expected_runs": expected_runs,
         "chi_squared": chi_squared,
-        "p_value": p_value
+        "p_value": p_value,
+        "total_observed": total_observed,
+        "total_expected": total_expected
     }
 
 def prime_factorization(n):
@@ -167,7 +378,7 @@ def find_valid_c(m):
     
     return valid_c_values
 
-def generate_lcg_sequence(a, c, m, seed, length=1000):
+def generate_lcg_sequence(a, c, m, seed, length):
     """Generuoti atsitiktinių skaičių seką naudojant LCG algoritmą."""
     sequence = [seed]
     x = seed
@@ -178,7 +389,7 @@ def generate_lcg_sequence(a, c, m, seed, length=1000):
     
     return sequence
 
-def test_c_correlation(a, m, valid_c_values, num_tests=50):
+def test_c_correlation(a, m, valid_c_values, num_tests):
     """Calculate theoretical correlation for different c values."""
     c_theoretical_correlations = []
     
@@ -232,12 +443,12 @@ def main():
     # Rasti tinkamas c reikšmes
     valid_c_values = find_valid_c(m)
     
-    theoretical_correlations = test_c_correlation(best_a, m, valid_c_values)
+    theoretical_correlations = test_c_correlation(best_a, m, valid_c_values, num_tests=100)
 
     print("\n=== Teorinės koreliacijos rezultatai ===")
-    print(f"{'c reikšmė':<15}{'Teorinė koreliacija':<22}{'Paklaidos riba':<15}")
+    print(f"{'c reikšmė':<15}{'Teorinė koreliacija':<22}")
     for c, corr, error in theoretical_correlations[:3]:  # Rodyti 3 geriausius rezultatus
-        print(f"{c:<15}{corr:.6f}{error:.6f}")
+        print(f"{c:<15}{corr:.6f}")
     
     # Geriausia c reikšmė pagal teorinę formulę
     best_c_theo, best_corr_theo, error_bound = theoretical_correlations[0]
@@ -253,23 +464,16 @@ def main():
     print(f"m = {m}")
     print(f"Tiesinio kongruentinio metodo formulė: X_n+1 = ({best_a} * X_n + {best_c}) mod {m}")
     seed = 1
-    sequence = generate_lcg_sequence(best_a, best_c, m, seed, length=5)
-    
-    print("\nPirmieji 5 sugeneruotų pseudoatsitiktinių skaičių:")
-    print(f"{'n':<3}{'X_n':<8}{'X_n/m':<10}")
-    for i, number in enumerate(sequence):
-        normalized = number / m
-        print(f"{i:<3}{number:<8}{normalized:.6f}")
+    sequence = generate_lcg_sequence(best_a, best_c, m, seed, length=100)
+
+    print("\nPirmieji 100 sugeneruotų pseudoatsitiktinių skaičių:")
+    print(sequence)
 
     long_sequence = generate_lcg_sequence(best_a, best_c, m, seed, length=1000)
 
     # Sugeneruoti dvejetainę seką iš LCG sekos (pvz., modulo 2)
     binary_sequence = [x % 2 for x in long_sequence]
 
-    # Spausdinti pirmas 20 dvejetainės sekos reikšmių patikrinti šabloną
-    print("\nPirmos 20 dvejetainės sekos reikšmių:")
-    binary_str = ''.join(str(bit) for bit in binary_sequence[:20])
-    print(binary_str)
     # Skaičiuoti perėjimus sekoje
     transitions = []
     for i in range(len(binary_sequence)-1):
@@ -285,26 +489,36 @@ def main():
     
     print("\nPerėjimų skaičius (pirmi 100 perėjimų):")
     for t, count in transition_counts.items():
-        print(f"{t}: {count}")        # Atlikti nuoseklumo testą tripletams
-    alpha = 0.05  # Reikšmingumo lygis
-    serial_test_results = serial_test_triplets(binary_sequence, alpha)
+        print(f"{t}: {count}")    # Atlikti nuoseklumo testą trejetams
+    serial_test_results = serial_test_triplets(binary_sequence)
     
     # Spausdinti nuoseklumo testo rezultatus
-    print("\nNuoseklumo testo tripletams rezultatai:")
+    print("\nNuoseklumo testo trejetams rezultatai:")
     print(f"Laisvės laipsniai: {serial_test_results['degrees_of_freedom']}")
     print(f"P-reikšmė: {serial_test_results['p_value']:.4f}")     
     
-    # Atlikti monotoniškumo testą
-    monotonicity_test_results = monotonicity_test(long_sequence, alpha)
-    
-    # Spausdinti monotoniškumo testo rezultatus
+    # Run the monotonicity test with debugging enabled
+    monotonicity_test_results = monotonicity_test(long_sequence, debug=True)
+
     print("\nMonotoniškumo testo rezultatai:")
-    print(f"Didėjančios sekos: {monotonicity_test_results['increasing_runs']}")
-    print(f"Mažėjančios sekos: {monotonicity_test_results['decreasing_runs']}")
-    print(f"Iš viso sekų: {monotonicity_test_results['total_runs']}")
-    print(f"Tikėtinas sekų skaičius: {monotonicity_test_results['expected_runs']:.4f}")
-    print(f"Chi-kvadrato statistika: {monotonicity_test_results['chi_squared']:.4f}")
-    print(f"P-reikšmė: {monotonicity_test_results['p_value']:.4f}")
+    print(f"{'Run Length':<12}{'Observed':<12}{'Expected':<12}{'Difference':<12}")
+    print("-" * 48)
+    for length in [1, 2, 3, '>3']:
+        observed = monotonicity_test_results['total_runs'][length]
+        expected = monotonicity_test_results['expected_runs'][length]
+        diff = observed - expected
+        print(f"{length:<12}{observed:<12.2f}{expected:<12.2f}{diff:<12.2f}")
+    print("-" * 48)
+
+    # Sum row
+    total_observed = sum(monotonicity_test_results['total_runs'].values())
+    total_expected = sum(monotonicity_test_results['expected_runs'].values())
+    print(f"{'Total':<12}{total_observed:<12.2f}{total_expected:<12.2f}{total_observed-total_expected:<12.2f}")
+
+    print(f"\nChi-squared statistic: {monotonicity_test_results['chi_squared']:.4f}")
+    print(f"P-value: {monotonicity_test_results['p_value']:.4f}")
+    print(f"Increasing runs: {dict(monotonicity_test_results['increasing_runs'])}")
+    print(f"Decreasing runs: {dict(monotonicity_test_results['decreasing_runs'])}")
 
 if __name__ == "__main__":
     main()
