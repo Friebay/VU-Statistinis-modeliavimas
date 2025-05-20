@@ -1,3 +1,4 @@
+# failo kelias: c:\Users\zabit\Documents\GitHub\VU-Statistinis-modeliavimas\uzduotis_1107\f_distribution_model.py
 import math
 import matplotlib.pyplot as plt
 import numpy as np
@@ -6,7 +7,7 @@ from lcg_parameters_calculator import generate_lcg_sequence
 
 def generate_uniform_random_numbers(a, c, m, seed, length):
     sequence = generate_lcg_sequence(a, c, m, seed, length)
-    # Normalize to [0,1]
+    # Normalizuoti į [0,1]
     return [x / m for x in sequence]
 
 def box_muller_transform(uniform_random_numbers):
@@ -16,11 +17,11 @@ def box_muller_transform(uniform_random_numbers):
         u1 = uniform_random_numbers[i]
         u2 = uniform_random_numbers[i + 1]
         
-        # Avoid log(0)
+        # Išvengti log(0)
         if u1 == 0:
             u1 = 1e-10
             
-        # Box-Muller transformation
+        # Box-Muller transformacija
         r = math.sqrt(-2 * math.log(u1))
         theta = 2 * math.pi * u2
         
@@ -34,11 +35,11 @@ def box_muller_transform(uniform_random_numbers):
 def generate_chi_squared(standard_normals, df):
     chi_squared_values = []
     
-    # Process in groups of df standard normals
+    # Apdoroti grupėmis po df standartinių normaliųjų
     for i in range(0, len(standard_normals) - df + 1, df):
         group = standard_normals[i:i+df]
         
-        # Sum of squares follows chi-squared distribution with df degrees of freedom
+        # Kvadratų suma atitinka chi-kvadrato skirstinį su df laisvės laipsniais
         chi_squared = sum(z**2 for z in group)
         chi_squared_values.append(chi_squared)
     
@@ -46,23 +47,23 @@ def generate_chi_squared(standard_normals, df):
 
 def generate_f_distribution(chi_squared_v1, chi_squared_v2, v1, v2):
     """
-    Generate F-distributed random variables using chi-squared variables.
+    Generuoti F-pasiskirsčiusius atsitiktinius kintamuosius naudojant chi-kvadrato kintamuosius.
     
-    Parameters:
-        chi_squared_v1 (list): Chi-squared random variables with v1 degrees of freedom
-        chi_squared_v2 (list): Chi-squared random variables with v2 degrees of freedom
-        v1 (int): Numerator degrees of freedom
-        v2 (int): Denominator degrees of freedom
+    Parametrai:
+        chi_squared_v1 (list): Chi-kvadrato atsitiktiniai kintamieji su v1 laisvės laipsniais
+        chi_squared_v2 (list): Chi-kvadrato atsitiktiniai kintamieji su v2 laisvės laipsniais
+        v1 (int): Skaitiklio laisvės laipsniai
+        v2 (int): Vardiklio laisvės laipsniai
     
-    Returns:
-        list: F-distributed random variables
+    Grąžina:
+        list: F-pasiskirsčiusius atsitiktinius kintamuosius
     """
     f_values = []
     
-    # Use formula: X = (v2*Y1)/(v1*Y2)
+    # Naudoti formulę: X = (v2*Y1)/(v1*Y2)
     min_length = min(len(chi_squared_v1), len(chi_squared_v2))
     for i in range(min_length):
-        # Avoid division by zero
+        # Išvengti dalybos iš nulio
         if chi_squared_v2[i] == 0:
             continue
             
@@ -73,40 +74,40 @@ def generate_f_distribution(chi_squared_v1, chi_squared_v2, v1, v2):
 
 def analyze_f_distribution(f_values, v1, v2):
     """
-    Analyze the generated F-distribution.
+    Analizuoti sugeneruotą F-skirstinį.
     
-    Parameters:
-        f_values (list): F-distributed random variables
-        v1 (int): Numerator degrees of freedom
-        v2 (int): Denominator degrees of freedom
+    Parametrai:
+        f_values (list): F-pasiskirsčiusių kintamųjų sąrašas
+        v1 (int): Skaitiklio laisvės laipsniai
+        v2 (int): Vardiklio laisvės laipsniai
     """
-    print(f"\nF-Distribution Analysis (v1={v1}, v2={v2}):")
-    print(f"Sample Size: {len(f_values)}")
+    print(f"\nF-skirstinio analizė (v1={v1}, v2={v2}):")
+    print(f"Imties dydis: {len(f_values)}")
     
-    # Basic statistics
+    # Pagrindinė statistika
     mean = sum(f_values) / len(f_values)
     variance = sum((x - mean) ** 2 for x in f_values) / len(f_values)
     
-    # Theoretical mean (exists only for v2 > 2)
+    # Teorinis vidurkis (egzistuoja tik kai v2 > 2)
     if v2 > 2:
         theoretical_mean = v2 / (v2 - 2)
-        print(f"Mean: {mean:.4f} (Theoretical: {theoretical_mean:.4f})")
+        print(f"Vidurkis: {mean:.4f} (Teorinis: {theoretical_mean:.4f})")
     else:
-        print(f"Mean: {mean:.4f} (Theoretical mean doesn't exist for v2 <= 2)")
+        print(f"Vidurkis: {mean:.4f} (Teorinis vidurkis neegzistuoja kai v2 <= 2)")
     
-    # Theoretical variance (exists only for v2 > 4)
+    # Teorinė dispersija (egzistuoja tik kai v2 > 4)
     if v2 > 4:
         theoretical_var = (2 * v2**2 * (v1 + v2 - 2)) / (v1 * (v2 - 2)**2 * (v2 - 4))
-        print(f"Variance: {variance:.4f} (Theoretical: {theoretical_var:.4f})")
+        print(f"Dispersija: {variance:.4f} (Teorinė: {theoretical_var:.4f})")
     else:
-        print(f"Variance: {variance:.4f} (Theoretical variance doesn't exist for v2 <= 4)")
+        print(f"Dispersija: {variance:.4f} (Teorinė dispersija neegzistuoja kai v2 <= 4)")
     
-    # Quantile comparison
+    # Kvantilių palyginimas
     f_values_sorted = sorted(f_values)
     quantiles = [0.01, 0.05, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.99]
     
-    print("\nQuantile Comparison:")
-    print(f"{'Quantile':<10}{'Generated':<15}{'Theoretical':<15}{'Difference':<15}")
+    print("\nKvantilių palyginimas:")
+    print(f"{'Kvantilis':<10}{'Sugeneruota':<15}{'Teorinis':<15}{'Skirtumas':<15}")
     
     for q in quantiles:
         idx = int(q * len(f_values))
@@ -119,27 +120,27 @@ def analyze_f_distribution(f_values, v1, v2):
 def plot_f_distribution(f_values, v1, v2):
     plt.figure(figsize=(10, 6))
     
-    # Filter out extreme values for better visualization
+    # Filtruoti ekstremalias reikšmes geresnei vizualizacijai
     max_display = np.percentile(f_values, 99)
     plot_values = [x for x in f_values if x <= max_display]
     
-    # Plot histogram
+    # Vaizduoti histogramą
     hist, bins, _ = plt.hist(plot_values, bins=100, density=True, alpha=0.6, 
-                             label='Generated F-distribution')
+                             label='Sugeneruotas F-skirstinys')
     
-    # Plot theoretical F-distribution PDF
+    # Vaizduoti teorinę F-skirstinio tankio funkciją
     x = np.linspace(0.01, max_display, 1000)
     y = stats.f.pdf(x, v1, v2)
-    plt.plot(x, y, 'r-', lw=2, label=f'Theoretical F({v1},{v2}) PDF')
+    plt.plot(x, y, 'r-', lw=2, label=f'Teorinė F({v1},{v2}) tankio funkcija')
     
-    # Plot settings
-    plt.title(f'F-Distribution with {v1} and {v2} Degrees of Freedom')
-    plt.xlabel('Value')
-    plt.ylabel('Probability Density')
+    # Diagramos nustatymai
+    plt.title(f'F-skirstinys su {v1} ir {v2} laisvės laipsniais')
+    plt.xlabel('Reikšmė')
+    plt.ylabel('Tikimybės tankis')
     plt.legend()
     plt.grid(True, alpha=0.3)
     
-    # Save the plot
+    # Išsaugoti diagramą
     plt.tight_layout()
     plt.show()
 
@@ -149,33 +150,33 @@ def main():
     m = 1107
     seed = 1
     
-    v1 = 2  # Numerator degrees of freedom
-    v2 = 3  # Denominator degrees of freedom
+    v1 = 2  # Skaitiklio laisvės laipsniai
+    v2 = 3  # Vardiklio laisvės laipsniai
     
-    # Sample size calculation
-    # For each F-distributed value, we need:
-    # - v1 standard normals for chi-squared with v1 df
-    # - v2 standard normals for chi-squared with v2 df
-    # Each Box-Muller transform needs 2 uniform random numbers to generate 2 standard normals
+    # Imties dydžio skaičiavimas
+    # Kiekvienai F-pasiskirsčiusiai reikšmei reikia:
+    # - v1 standartinių normaliųjų chi-kvadratui su v1 laisvės laipsniais
+    # - v2 standartinių normaliųjų chi-kvadratui su v2 laisvės laipsniais
+    # Kiekviena Box-Muller transformacija reikalauja 2 tolygiai pasiskirsčiusių atsitiktinių skaičių 2 standartiniams normaliesiems sugeneruoti
     
     target_sample_size = 1000
     needed_uniforms = math.ceil(target_sample_size * (v1 + v2) / 2)
     
-    # Generate uniform random numbers using your LCG
-    print(f"Generating {needed_uniforms} uniform random numbers using LCG...")
+    # Generuoti tolygiai pasiskirsčiusius atsitiktinius skaičius naudojant LCG
+    print(f"Generuojami {needed_uniforms} tolygiai pasiskirstyti atsitiktiniai skaičiai naudojant LCG...")
     uniform_random_numbers = generate_uniform_random_numbers(a, c, m, seed, needed_uniforms)
     
-    # Transform to standard normal variables using Box-Muller
-    print("Transforming to standard normal distribution using Box-Muller transform...")
+    # Transformuoti į standartinį normalųjį skirstinį naudojant Box-Muller
+    print("Transformuojama į standartinį normalųjį skirstinį naudojant Box-Muller transformaciją...")
     standard_normals = box_muller_transform(uniform_random_numbers)
     
-    # Generate chi-squared variables
-    print(f"Generating chi-squared variables with {v1} and {v2} degrees of freedom...")
+    # Generuoti chi-kvadrato kintamuosius
+    print(f"Generuojami chi-kvadrato kintamieji su {v1} ir {v2} laisvės laipsniais...")
     chi_squared_v1 = generate_chi_squared(standard_normals, v1)
     chi_squared_v2 = generate_chi_squared(standard_normals, v2)
     
-    # Generate F-distributed variables using the formula X = (v2*Y1)/(v1*Y2)
-    print("Computing F-distributed random variables...")
+    # Generuoti F-pasiskirsčiusius kintamuosius naudojant formulę X = (v2*Y1)/(v1*Y2)
+    print("Skaičiuojami F-pasiskirsčiusių atsitiktiniai kintamieji...")
     f_values = generate_f_distribution(chi_squared_v1, chi_squared_v2, v1, v2)
     
     analyze_f_distribution(f_values, v1, v2)

@@ -4,12 +4,6 @@ import numpy as np
 import scipy.stats as stats
 
 def serial_test_triplets(sequence, alpha=0.05):
-    # Patikrinti įvestį
-    if not all(x in [0, 1] for x in sequence):
-        raise ValueError("Seka turi susidėti tik iš 0 ir 1.")
-    if len(sequence) < 3:
-        raise ValueError("Sekos ilgis turi būti bent 3.")
-    
     # Generuoti nepersidengiančius trejetus iš sekos pagal užduoties aprašymą
     # Imame grupėmis po 3 elementus: (Y_0, Y_1, Y_2), (Y_3, Y_4, Y_5), ...
     usable_length = (len(sequence) // 3) * 3
@@ -53,16 +47,7 @@ def monotonicity_test(sequence, alpha=0.05):
     In a truly random sequence, the number of increasing and decreasing runs
     should follow a specific distribution. This test compares the observed
     number of runs against the expected distribution.
-    
-    Args:
-        sequence: List of integers or floats to test
-        alpha: Significance level (default: 0.05)
-        
-    Returns:
-        Dictionary with test results
     """
-    if len(sequence) < 10:
-        raise ValueError("Sequence length must be at least 10 for meaningful results")
     
     # Count increasing and decreasing runs
     increasing_runs = 0
@@ -265,103 +250,97 @@ def main():
     valid_a_values.sort(key=lambda x: x[2], reverse=True)
     
     # Spausdinti rezultatus
-    if valid_a_values:
-        print(f"\n{'Daugiklis a':<15}{'b=a-1':<15}{'Galingumas s':<15}")
-        
-        for a, b, power in valid_a_values[:10]:  # Rodyti 10 geriausių rezultatų
-            print(f"{a:<15}{b:<15}{power:<15}")
-        
-        # Geriausias rezultatas
-        best_a, best_b, best_power = valid_a_values[0]
-        print("\nGeriausias rezultatas:")
-        print(f"Daugiklis a = {best_a}")
-        print(f"b = a - 1 = {best_b}")
-        print(f"Galingumas s = {best_power}")
-        
-        # Patikrinti rezultatą
-        print("\nPatikrinimas:")
-        print(f"b^s mod m = {best_b}^{best_power} mod {m} = {pow(best_b, best_power, m)}")        # Rasti tinkamas c reikšmes
-        valid_c_values = find_valid_c(m)
-        
-        # Testuoti c reikšmes dėl koreliacijos
-        c_correlations = test_c_correlation(best_a, m, valid_c_values)
-        
-        print(f"\n{'c reikšmė':<15}{'Koreliacija':<15}")
-        for c, corr in c_correlations[:5]:  # Rodyti 5 geriausius rezultatus
-            print(f"{c:<15}{corr:.6f}")
-        
-        # Geriausia c reikšmė (su minimalia koreliacija)
-        best_c, best_corr = c_correlations[0]
-        
-        print("\nUžduočiai naudosime:")
-        print(f"c = {best_c} (koreliacija: {best_corr:.6f})")
-        
-        print("\nPilni LCG parametrai:")
-        print(f"a = {best_a}")
-        print(f"c = {best_c}")
-        print(f"m = {m}")
-        print(f"LCG formulė: X_n+1 = ({best_a} * X_n + {best_c}) mod {m}")
-        seed = 1
-        sequence = generate_lcg_sequence(best_a, best_c, m, seed, length=5)
-        
-        print("\nPirmieji 5 sugeneruotų pseudoatsitiktinių skaičių:")
-        print(f"{'n':<5}{'X_n':<8}{'X_n/m':<10}")
-        for i, number in enumerate(sequence):
-            normalized = number / m
-            print(f"{i:<5}{number:<8}{normalized:.6f}")
+    print(f"\n{'Daugiklis a':<15}{'b=a-1':<15}{'Galingumas s':<15}")
+    
+    for a, b, power in valid_a_values[:10]:  # Rodyti 10 geriausių rezultatų
+        print(f"{a:<15}{b:<15}{power:<15}")
+    
+    # Geriausias rezultatas
+    best_a, best_b, best_power = valid_a_values[0]
+    print("\nGeriausias rezultatas:")
+    print(f"Daugiklis a = {best_a}")
+    print(f"b = a - 1 = {best_b}")
+    print(f"Galingumas s = {best_power}")
+    
+    # Patikrinti rezultatą
+    print("\nPatikrinimas:")
+    print(f"b^s mod m = {best_b}^{best_power} mod {m} = {pow(best_b, best_power, m)}")        # Rasti tinkamas c reikšmes
+    valid_c_values = find_valid_c(m)
+    
+    # Testuoti c reikšmes dėl koreliacijos
+    c_correlations = test_c_correlation(best_a, m, valid_c_values)
+    
+    print(f"\n{'c reikšmė':<15}{'Koreliacija':<15}")
+    for c, corr in c_correlations[:3]:  # Rodyti 3 geriausius rezultatus
+        print(f"{c:<15}{corr:.6f}")
+    
+    # Geriausia c reikšmė (su minimalia koreliacija)
+    best_c, best_corr = c_correlations[0]
+    
+    print("\nUžduočiai naudosime:")
+    print(f"c = {best_c} (koreliacija: {best_corr:.6f})")
+    
+    print("\nPilni LCG parametrai:")
+    print(f"a = {best_a}")
+    print(f"c = {best_c}")
+    print(f"m = {m}")
+    print(f"LCG formulė: X_n+1 = ({best_a} * X_n + {best_c}) mod {m}")
+    seed = 1
+    sequence = generate_lcg_sequence(best_a, best_c, m, seed, length=5)
+    
+    print("\nPirmieji 5 sugeneruotų pseudoatsitiktinių skaičių:")
+    print(f"{'n':<5}{'X_n':<8}{'X_n/m':<10}")
+    for i, number in enumerate(sequence):
+        normalized = number / m
+        print(f"{i:<5}{number:<8}{normalized:.6f}")
 
-        long_sequence = generate_lcg_sequence(best_a, best_c, m, seed, length=1000)
-        
-        print(long_sequence[:10])
+    long_sequence = generate_lcg_sequence(best_a, best_c, m, seed, length=1000)
 
-        # Sugeneruoti dvejetainę seką iš LCG sekos (pvz., modulo 2)
-        binary_sequence = [x % 2 for x in long_sequence]
+    # Sugeneruoti dvejetainę seką iš LCG sekos (pvz., modulo 2)
+    binary_sequence = [x % 2 for x in long_sequence]
 
-        # Spausdinti pirmas 20 dvejetainės sekos reikšmių patikrinti šabloną
-        print("\nPirmos 20 dvejetainės sekos reikšmių (modulis 2):")
-        binary_str = ''.join(str(bit) for bit in binary_sequence[:20])
-        print(binary_str)
-        # Skaičiuoti perėjimus sekoje
-        transitions = []
-        for i in range(len(binary_sequence)-1):
-            transitions.append((binary_sequence[i], binary_sequence[i+1]))
-        
-        # Spausdinti perėjimų skaičių
-        transition_counts = {}
-        for t in transitions[:100]:
-            if t in transition_counts:
-                transition_counts[t] += 1
-            else:
-                transition_counts[t] = 1
-        
-        print("\nPerėjimų skaičius (pirmi 100 perėjimų):")
-        for t, count in transition_counts.items():
-            print(f"{t}: {count}")        # Atlikti nuoseklumo testą tripletams
-        alpha = 0.05  # Reikšmingumo lygis
-        serial_test_results = serial_test_triplets(binary_sequence, alpha)
-        
-        # Spausdinti nuoseklumo testo rezultatus
-        print("\nNuoseklumo testo tripletams rezultatai:")
-        print(f"Chi-kvadrato statistika: {serial_test_results['chi_squared']:.4f}")
-        print(f"Laisvės laipsniai: {serial_test_results['degrees_of_freedom']}")
-        print(f"P-reikšmė: {serial_test_results['p_value']:.4f}")
-        print(f"Išvada: {serial_test_results['conclusion']}")        
-        
-        # Atlikti monotoniškumo testą
-        monotonicity_test_results = monotonicity_test(long_sequence, alpha)
-        
-        # Spausdinti monotoniškumo testo rezultatus
-        print("\nMonotoniškumo testo rezultatai:")
-        print(f"Didėjančios sekos: {monotonicity_test_results['increasing_runs']}")
-        print(f"Mažėjančios sekos: {monotonicity_test_results['decreasing_runs']}")
-        print(f"Iš viso sekų: {monotonicity_test_results['total_runs']}")
-        print(f"Tikėtinas sekų skaičius: {monotonicity_test_results['expected_runs']:.4f}")
-        print(f"Chi-kvadrato statistika: {monotonicity_test_results['chi_squared']:.4f}")
-        print(f"P-reikšmė: {monotonicity_test_results['p_value']:.4f}")
-        print(f"Išvada: {monotonicity_test_results['conclusion']}")
-
-    else:
-        print("Nerasta tinkamų daugiklio 'a' reikšmių.")
+    # Spausdinti pirmas 20 dvejetainės sekos reikšmių patikrinti šabloną
+    print("\nPirmos 20 dvejetainės sekos reikšmių (modulis 2):")
+    binary_str = ''.join(str(bit) for bit in binary_sequence[:20])
+    print(binary_str)
+    # Skaičiuoti perėjimus sekoje
+    transitions = []
+    for i in range(len(binary_sequence)-1):
+        transitions.append((binary_sequence[i], binary_sequence[i+1]))
+    
+    # Spausdinti perėjimų skaičių
+    transition_counts = {}
+    for t in transitions[:100]:
+        if t in transition_counts:
+            transition_counts[t] += 1
+        else:
+            transition_counts[t] = 1
+    
+    print("\nPerėjimų skaičius (pirmi 100 perėjimų):")
+    for t, count in transition_counts.items():
+        print(f"{t}: {count}")        # Atlikti nuoseklumo testą tripletams
+    alpha = 0.05  # Reikšmingumo lygis
+    serial_test_results = serial_test_triplets(binary_sequence, alpha)
+    
+    # Spausdinti nuoseklumo testo rezultatus
+    print("\nNuoseklumo testo tripletams rezultatai:")
+    print(f"Chi-kvadrato statistika: {serial_test_results['chi_squared']:.4f}")
+    print(f"Laisvės laipsniai: {serial_test_results['degrees_of_freedom']}")
+    print(f"P-reikšmė: {serial_test_results['p_value']:.4f}")
+    print(f"Išvada: {serial_test_results['conclusion']}")        
+    
+    # Atlikti monotoniškumo testą
+    monotonicity_test_results = monotonicity_test(long_sequence, alpha)
+    
+    # Spausdinti monotoniškumo testo rezultatus
+    print("\nMonotoniškumo testo rezultatai:")
+    print(f"Didėjančios sekos: {monotonicity_test_results['increasing_runs']}")
+    print(f"Mažėjančios sekos: {monotonicity_test_results['decreasing_runs']}")
+    print(f"Iš viso sekų: {monotonicity_test_results['total_runs']}")
+    print(f"Tikėtinas sekų skaičius: {monotonicity_test_results['expected_runs']:.4f}")
+    print(f"Chi-kvadrato statistika: {monotonicity_test_results['chi_squared']:.4f}")
+    print(f"P-reikšmė: {monotonicity_test_results['p_value']:.4f}")
+    print(f"Išvada: {monotonicity_test_results['conclusion']}")
 
 if __name__ == "__main__":
     main()

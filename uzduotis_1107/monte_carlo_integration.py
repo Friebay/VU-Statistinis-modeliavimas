@@ -4,38 +4,35 @@ from lcg_parameters_calculator import generate_lcg_sequence
 
 def monte_carlo_integration(func, a, b, num_samples=1000):
     """
-    Perform Monte Carlo integration of a function over interval [a, b]
+    Atlikti Monte Karlo integravimą funkcijai intervale [a, b]
     
-    Parameters:
-        func (function): Function to integrate
-        a (float): Lower bound of integration
-        b (float): Upper bound of integration
-        num_samples (int): Number of random points to use, default is 1000
-        
-    Returns:
-        float: Estimated value of the integral
+    Parametrai:
+        func (function): Funkcija, kurią reikia integruoti
+        a (float): Integravimo apatinė riba
+        b (float): Integravimo viršutinė riba
+        num_samples (int): Atsitiktinių taškų skaičius, numatytasis yra 1000
     """
-    # Generate uniform random numbers using LCG
-    # Parameters from lcg_parameters_calculator output
-    lcg_a = 370  # Multiplier
-    lcg_c = 71   # Increment
-    lcg_m = 1107  # Modulus = 3^3 * 41
+    # Sugeneruojame tolygiai pasiskirsčiusius atsitiktinius skaičius naudojant LCG
+    # Parametrai iš lcg_parameters_calculator išvesties
+    lcg_a = 370  # Daugiklis
+    lcg_c = 71   # Prieaugis
+    lcg_m = 1107  # Modulis = 3^3 * 41
     seed = 1
     
-    # Generate exactly the number of samples needed
+    # Sugeneruojame tiksliai reikiamą imčių skaičių
     lcg_values = generate_lcg_sequence(lcg_a, lcg_c, lcg_m, seed, num_samples)
     
-    # Convert to values in interval [a, b]
+    # Konvertuojame į reikšmes intervale [a, b]
     uniform_samples = []
     for val in lcg_values:
-        # Normalize to [0, 1] and then scale to [a, b]
+        # Normalizuojame į [0, 1], tada keičiame mastelį į [a, b]
         x = a + (b - a) * (val / lcg_m)
         uniform_samples.append(x)
     
-    # Evaluate function at each sample point
+    # Įvertiname funkciją kiekviename imties taške
     function_values = [func(x) for x in uniform_samples]
     
-    # Calculate the average function value and multiply by interval width
+    # Apskaičiuojame vidutinę funkcijos reikšmę ir padauginame iš intervalo pločio
     average_value = sum(function_values) / num_samples
     integral_estimate = (b - a) * average_value
     
@@ -43,50 +40,49 @@ def monte_carlo_integration(func, a, b, num_samples=1000):
 
 def analytical_solution():
     """
-    Calculate the analytical solution to the integral ∫[1 to π] (x(ln(x)+e^x))dx
+    Apskaičiuojame analitinį integralo ∫[e iki π] (x(ln(x)+e^x))dx sprendinį
     """
-    # For ∫[1 to π] (x(ln(x)+e^x))dx
-    # First term: ∫[1 to π] x ln(x) dx = [0.5x^2 ln(x) - 0.25x^2]_1^π
-    # Second term: ∫[1 to π] x e^x dx requires integration by parts
+    # Integralo ∫[e iki π] (x(ln(x)+e^x))dx apskaičiavimas
+    # Pirmasis narys: ∫[e iki π] x ln(x) dx = [0.5x^2 ln(x) - 0.25x^2]_e^π
+    # Antrasis narys: ∫[e iki π] x e^x dx reikalauja integravimo dalimis
     
-    # First term evaluation at upper bound π
+    # Pirmojo nario įvertinimas viršutinėje riboje π
     term1_upper = 0.5 * (math.pi**2) * math.log(math.pi) - 0.25 * (math.pi**2)
-    # First term evaluation at lower bound 1
-    term1_lower = 0.5 * (1**2) * math.log(1) - 0.25 * (1**2) 
-    # Note: ln(1) = 0, so term1_lower = -0.25
+    # Pirmojo nario įvertinimas apatinėje riboje e
+    term1_lower = 0.5 * (math.e**2) * math.log(math.e) - 0.25 * (math.e**2) 
+    # Pastaba: ln(e) = 1, todėl term1_lower = 0.5 * (math.e**2) - 0.25 * (math.e**2)
     
-    # Second term: ∫[1 to π] x e^x dx = [x*e^x - e^x]_1^π
+    # Antrasis narys: ∫[e iki π] x e^x dx = [x*e^x - e^x]_e^π
     term2_upper = math.pi * math.exp(math.pi) - math.exp(math.pi)
-    term2_lower = 1 * math.exp(1) - math.exp(1)
+    term2_lower = math.e * math.exp(math.e) - math.exp(math.e)
     
-    # Combine the terms
+    # Narių sujungimas
     result = (term1_upper - term1_lower) + (term2_upper - term2_lower)
     
     return result
 
 def main():
-    # Define the function to integrate: f(x) = x(ln(x) + e^x)
+    # Apibrėžiame integruojamą funkciją: f(x) = x(ln(x) + e^x)
     def f(x):
         return x * (math.log(x) + math.exp(x))
     
-    # Integration bounds
+    # Integravimo ribos
     a = 1
     b = math.pi
-      # Calculate analytical solution
+    # Apskaičiuojame analitinį sprendinį
     exact_value = analytical_solution()
-    print(f"Analytical solution: {exact_value:.10f}")
-    print("\n1. Monte Carlo Integration with Uniform Distribution:")
-    print(f"{'Sample Size':<15}{'Method':<20}{'Estimate':<20}{'Absolute Error':<20}{'Relative Error (%)':<20}")
+    print(f"Analitinis sprendinys: {exact_value:.10f}")
+    print("\n1. Monte Karlo integravimas su tolygiuoju pasiskirstymu:")
+    print(f"{'Imties dydis':<15}{'Metodas':<20}{'Įvertis':<20}{'Absoliutinė paklaida':<20}{'Santykinė paklaida (%)':<20}")
     
-    # Perform Monte Carlo integration with 1000 samples
+    # Atliekame Monte Karlo integravimą su 1000 imčių
     estimate, samples, function_values = monte_carlo_integration(f, a, b)
     abs_error = abs(estimate - exact_value)
     rel_error = abs_error / exact_value * 100
-    print(f"{1000:<15}{'Uniform':<20}{estimate:<20.10f}{abs_error:<20.10f}{rel_error:<20.6f}")
+    print(f"{1000:<15}{'Tolygusis':<20}{estimate:<20.10f}{abs_error:<20.10f}{rel_error:<20.6f}")
     
-    print("\nConclusion:")
-    print(f"The integral ∫[1 to π] (x(ln(x)+e^x))dx ≈ {estimate:.10f} (Uniform sampling)")
-    print(f"With uniform sampling, relative error: {rel_error:.6f}%")
+    print("\nIšvada:")
+    print(f"Integralas ∫[e iki π] (x(ln(x)+e^x))dx ≈ {estimate:.10f}")
     
 if __name__ == "__main__":
     main()
