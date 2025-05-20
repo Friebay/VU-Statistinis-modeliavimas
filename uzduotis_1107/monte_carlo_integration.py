@@ -40,21 +40,21 @@ def monte_carlo_integration(func, a, b, num_samples=1000):
 
 def analytical_solution():
     """
-    Apskaičiuojame analitinį integralo ∫[e iki π] (x(ln(x)+e^x))dx sprendinį
+    Apskaičiuojame analitinį integralo ∫[1 iki π] (x(ln(x)+e^x))dx sprendinį
     """
-    # Integralo ∫[e iki π] (x(ln(x)+e^x))dx apskaičiavimas
-    # Pirmasis narys: ∫[e iki π] x ln(x) dx = [0.5x^2 ln(x) - 0.25x^2]_e^π
-    # Antrasis narys: ∫[e iki π] x e^x dx reikalauja integravimo dalimis
+    # Integralo ∫[1 iki π] (x(ln(x)+e^x))dx apskaičiavimas
+    # Pirmasis narys: ∫[1 iki π] x ln(x) dx = [0.5x^2 ln(x) - 0.25x^2]_1^π
+    # Antrasis narys: ∫[1 iki π] x e^x dx reikalauja integravimo dalimis
     
     # Pirmojo nario įvertinimas viršutinėje riboje π
     term1_upper = 0.5 * (math.pi**2) * math.log(math.pi) - 0.25 * (math.pi**2)
-    # Pirmojo nario įvertinimas apatinėje riboje e
-    term1_lower = 0.5 * (math.e**2) * math.log(math.e) - 0.25 * (math.e**2) 
-    # Pastaba: ln(e) = 1, todėl term1_lower = 0.5 * (math.e**2) - 0.25 * (math.e**2)
+    # Pirmojo nario įvertinimas apatinėje riboje 1
+    term1_lower = 0.5 * (1**2) * math.log(1) - 0.25 * (1**2) 
+    # Pastaba: ln(1) = 0, todėl term1_lower = 0 - 0.25 = -0.25
     
-    # Antrasis narys: ∫[e iki π] x e^x dx = [x*e^x - e^x]_e^π
+    # Antrasis narys: ∫[1 iki π] x e^x dx = [x*e^x - e^x]_1^π
     term2_upper = math.pi * math.exp(math.pi) - math.exp(math.pi)
-    term2_lower = math.e * math.exp(math.e) - math.exp(math.e)
+    term2_lower = 1 * math.exp(1) - math.exp(1)
     
     # Narių sujungimas
     result = (term1_upper - term1_lower) + (term2_upper - term2_lower)
@@ -82,7 +82,7 @@ def main():
     print(f"{1000:<15}{'Tolygusis':<20}{estimate:<20.10f}{abs_error:<20.10f}{rel_error:<20.6f}")
     
     print("\nIšvada:")
-    print(f"Integralas ∫[e iki π] (x(ln(x)+e^x))dx ≈ {estimate:.10f}")
+    print(f"Integralas ∫[1 iki π] (x(ln(x)+e^x))dx ≈ {estimate:.10f}")
     
 if __name__ == "__main__":
     main()

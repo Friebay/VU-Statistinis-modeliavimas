@@ -27,28 +27,16 @@ def serial_test_triplets(sequence, alpha=0.05):
     degrees_of_freedom = len(possible_triplets) - 1  # 8 - 1 = 7
       # Apskaičiuoti p-reikšmę
     p_value = 1 - stats.chi2.cdf(chi_squared, degrees_of_freedom)
-    
-    # Išvada
-    conclusion = "Nepavyko atmesti nulinės hipotezės" if p_value > alpha else "Atmetame nulinę hipotezę"
 
     return {
         "chi_squared": chi_squared,
         "degrees_of_freedom": degrees_of_freedom,
         "p_value": p_value,
-        "conclusion": conclusion,
         "observed_counts": observed_counts,
         "expected_count": expected_count
     }
 
 def monotonicity_test(sequence, alpha=0.05):
-    """
-    Tests the sequence for monotonic patterns (increasing or decreasing runs).
-    
-    In a truly random sequence, the number of increasing and decreasing runs
-    should follow a specific distribution. This test compares the observed
-    number of runs against the expected distribution.
-    """
-    
     # Count increasing and decreasing runs
     increasing_runs = 0
     decreasing_runs = 0
@@ -104,17 +92,13 @@ def monotonicity_test(sequence, alpha=0.05):
     chi_squared = ((total_runs - expected_runs) ** 2) / expected_runs
     p_value = 1 - stats.chi2.cdf(chi_squared, df=1)
     
-    # Conclusion
-    conclusion = "Nepavyko atmesti nulinės hipotezės" if p_value > alpha else "Atmetame nulinę hipotezę"
-    
     return {
         "increasing_runs": increasing_runs,
         "decreasing_runs": decreasing_runs,
         "total_runs": total_runs,
         "expected_runs": expected_runs,
         "chi_squared": chi_squared,
-        "p_value": p_value,
-        "conclusion": conclusion
+        "p_value": p_value
     }
 
 def prime_factorization(n):
@@ -158,12 +142,6 @@ def find_power(a, m):
     return s
 
 def find_valid_c(m):
-    """Rasti tinkamą prieaugį 'c' LCG algoritmui.
-    
-    Maksimaliam periodui:
-    - c turi būti tarpusavyje pirminiai su m (gcd(c,m) = 1)
-    - Jei m dalijasi iš 4, c turėtų būti nelyginis
-    """
     valid_c_values = []
     
     for c in range(1, m):
@@ -228,12 +206,10 @@ def test_c_correlation(a, m, valid_c_values, num_tests=50, seed=1):
 
 def main():
     m = 1107
-    print(f"Modulis m = {m} = 3^3 * 41")
-    print("\nIeškome daugiklio 'a' su maksimaliu periodu ir galingumu:")
-    
+
     valid_a_values = []
     
-    print(f"Modulio m pirminiai daugikliai: {prime_factorization(m)}")
+    print(f"Modulio m = {m} pirminiai daugikliai: {prime_factorization(m)}")
     
     for a in range(2, m):
         # Tikrinti tik reikšmes, kur gcd(a,m) = 1
@@ -246,7 +222,7 @@ def main():
             if b % 3 == 0 and b % 41 == 0 and b % 9 == 0:
                 power = find_power(a, m)
                 valid_a_values.append((a, b, power))
-                print(f"Patikrinta a={a}, b={b}, galingumas={power}")    # Rūšiuoti pagal galią (didesnė yra geresnė)
+    # Rūšiuoti pagal galią (didesnė yra geresnė)
     valid_a_values.sort(key=lambda x: x[2], reverse=True)
     
     # Spausdinti rezultatus
@@ -264,7 +240,8 @@ def main():
     
     # Patikrinti rezultatą
     print("\nPatikrinimas:")
-    print(f"b^s mod m = {best_b}^{best_power} mod {m} = {pow(best_b, best_power, m)}")        # Rasti tinkamas c reikšmes
+    print(f"b^s mod m = {best_b}^{best_power} mod {m} = {pow(best_b, best_power, m)}")
+    # Rasti tinkamas c reikšmes
     valid_c_values = find_valid_c(m)
     
     # Testuoti c reikšmes dėl koreliacijos
@@ -280,19 +257,19 @@ def main():
     print("\nUžduočiai naudosime:")
     print(f"c = {best_c} (koreliacija: {best_corr:.6f})")
     
-    print("\nPilni LCG parametrai:")
+    print("\nPilni tiesinio kongruentinio metodo parametrai:")
     print(f"a = {best_a}")
     print(f"c = {best_c}")
     print(f"m = {m}")
-    print(f"LCG formulė: X_n+1 = ({best_a} * X_n + {best_c}) mod {m}")
+    print(f"Tiesinio kongruentinio metodo formulė: X_n+1 = ({best_a} * X_n + {best_c}) mod {m}")
     seed = 1
     sequence = generate_lcg_sequence(best_a, best_c, m, seed, length=5)
     
     print("\nPirmieji 5 sugeneruotų pseudoatsitiktinių skaičių:")
-    print(f"{'n':<5}{'X_n':<8}{'X_n/m':<10}")
+    print(f"{'n':<3}{'X_n':<8}{'X_n/m':<10}")
     for i, number in enumerate(sequence):
         normalized = number / m
-        print(f"{i:<5}{number:<8}{normalized:.6f}")
+        print(f"{i:<3}{number:<8}{normalized:.6f}")
 
     long_sequence = generate_lcg_sequence(best_a, best_c, m, seed, length=1000)
 
@@ -300,7 +277,7 @@ def main():
     binary_sequence = [x % 2 for x in long_sequence]
 
     # Spausdinti pirmas 20 dvejetainės sekos reikšmių patikrinti šabloną
-    print("\nPirmos 20 dvejetainės sekos reikšmių (modulis 2):")
+    print("\nPirmos 20 dvejetainės sekos reikšmių:")
     binary_str = ''.join(str(bit) for bit in binary_sequence[:20])
     print(binary_str)
     # Skaičiuoti perėjimus sekoje
@@ -324,10 +301,8 @@ def main():
     
     # Spausdinti nuoseklumo testo rezultatus
     print("\nNuoseklumo testo tripletams rezultatai:")
-    print(f"Chi-kvadrato statistika: {serial_test_results['chi_squared']:.4f}")
     print(f"Laisvės laipsniai: {serial_test_results['degrees_of_freedom']}")
-    print(f"P-reikšmė: {serial_test_results['p_value']:.4f}")
-    print(f"Išvada: {serial_test_results['conclusion']}")        
+    print(f"P-reikšmė: {serial_test_results['p_value']:.4f}")     
     
     # Atlikti monotoniškumo testą
     monotonicity_test_results = monotonicity_test(long_sequence, alpha)
@@ -340,7 +315,6 @@ def main():
     print(f"Tikėtinas sekų skaičius: {monotonicity_test_results['expected_runs']:.4f}")
     print(f"Chi-kvadrato statistika: {monotonicity_test_results['chi_squared']:.4f}")
     print(f"P-reikšmė: {monotonicity_test_results['p_value']:.4f}")
-    print(f"Išvada: {monotonicity_test_results['conclusion']}")
 
 if __name__ == "__main__":
     main()
