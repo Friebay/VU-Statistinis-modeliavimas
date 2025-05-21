@@ -7476,13 +7476,23 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=49f7a624">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="Statistinis-modeliavimas:-u%C5%BEduotis-1-5">Statistinis modeliavimas: užduotis 1-5<a class="anchor-link" href="#Statistinis-modeliavimas:-u%C5%BEduotis-1-5">¶</a></h1><h2 id="Vilniaus-Universitetas">Vilniaus Universitetas<a class="anchor-link" href="#Vilniaus-Universitetas">¶</a></h2><h3 id="Firstname-Lastname">Firstname Lastname<a class="anchor-link" href="#Firstname-Lastname">¶</a></h3>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=847bc80b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>MK užduotis 1-5</p>
 <ol>
 <li>Sugeneruokite pseudoatsitiktinių skaičių sekas tiesiniu kongruentiniu metodu su maksimaliu periodu, kai modulis $m=776$ ir $m=1107$. Daugiklius $a$ parinkite taip, kad galingumai būtų didžiausi. Prieauglio $c$ parinkimui naudokitės gretimų narių koreliacija (teoriniai testai).</li>
 </ol>
@@ -7493,32 +7503,45 @@ $X_0$ - pradinė reikšmė, $X_0 \geq 0$,
 $a$ - daugiklis, $a \geq 0$,
 $c$ - prieauglis, $c \geq 0$,
 $m$ - modulis, $m &gt; X_0, m &gt; a, m &gt; c$, yra perenkami.</p>
-<p>Gretimų narių koeficientas apibrežiamas taip:
-$$
-C := \frac{n \sum_{i=0}^{n-1} (U_i V_i) - \left(\sum_{i=0}^{n-1} U_i\right) \left(\sum_{i=0}^{n-1} V_i\right)}{\sqrt{\left(n \sum_{i=0}^{n-1} U_i^2 - \left(\sum_{i=0}^{n-1} U_i\right)^2\right) \left(n \sum_{i=0}^{n-1} V_i^2 - \left(\sum_{i=0}^{n-1} V_i\right)^2\right)}}
-$$</p>
 <p>Tiesinės kongruentinės sekos $(X_0, a, c, m)$ su maksimaliu periodu gretimų narių koreliacijos koeficientas</p>
 <p>$$C \approx \frac{1}{a} \left(1 - 6 \frac{c}{m} + 6 \left(\frac{c}{m}\right)^2\right).$$
 Šios apytikslės formulės klaida yra nedidesnė už $(a+6)/m$.</p>
 <p>Kad tiesinis kongruentinis generatorius turėtų maksimalų periodą lygų $m$, turi būti tenkinamos šios sąlygos:</p>
-<p>Skaičiai $c$ ir $m$ turi būti tarpusavyje pirminiai (jų DBD = 1).
-Jei $p$ yra bet kuris pirminis skaičius, kuris dalijasi iš $m$, tada $(a-1)$ turi dalintis iš $p$.
-Jei $m$ yra dalus iš 4, tada $(a-1)$ taip pat turi būti dalus iš 4.</p>
+<ul>
+<li>Skaičiai $c$ ir $m$ turi būti tarpusavyje pirminiai (jų DBD = 1).</li>
+<li>Jei $p$ yra bet kuris pirminis skaičius, kuris dalijasi iš $m$, tada $(a-1)$ turi dalintis iš $p$.</li>
+<li>Jei $m$ yra dalus iš 4, tada $(a-1)$ taip pat turi būti dalus iš 4.</li>
+</ul>
 <p>Modulis $776 = 8 \times 97 = 2^3 \times 97$</p>
 <p>Modulis $1107 = 3 \times 369 = 3^3 \times 41$</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=6bdf2f45">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ec95654c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="2.-Moduli%C5%B3-skaidymas-pirminiais-daugikliais">2. Modulių skaidymas pirminiais daugikliais<a class="anchor-link" href="#2.-Moduli%C5%B3-skaidymas-pirminiais-daugikliais">¶</a></h2>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6bdf2f45">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [115]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [199]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">prime_factorization</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="c1"># Skaičiaus n pirminių daugiklių radimas</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">gcd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">stats</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">prime_factorization</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="n">factors</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">d</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="k">while</span> <span class="n">d</span><span class="o">*</span><span class="n">d</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">:</span>
@@ -7535,9 +7558,21 @@ Jei $m$ yra dalus iš 4, tada $(a-1)$ taip pat turi būti dalus iš 4.</p>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">factors</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">factors</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Modulio 776 = </span><span class="si">{</span><span class="mi">776</span><span class="si">}</span><span class="s2"> pirminiai daugikliai: </span><span class="si">{</span><span class="n">prime_factorization</span><span class="p">(</span><span class="mi">776</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Modulio 1107 = </span><span class="si">{</span><span class="mi">1107</span><span class="si">}</span><span class="s2"> pirminiai daugikliai: </span><span class="si">{</span><span class="n">prime_factorization</span><span class="p">(</span><span class="mi">1107</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=11cb03cc">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [200]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Modulio 776  pirminiai daugikliai: </span><span class="si">{</span><span class="n">prime_factorization</span><span class="p">(</span><span class="mi">776</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Modulio 1107 pirminiai daugikliai: </span><span class="si">{</span><span class="n">prime_factorization</span><span class="p">(</span><span class="mi">1107</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7550,10 +7585,21 @@ Jei $m$ yra dalus iš 4, tada $(a-1)$ taip pat turi būti dalus iš 4.</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Modulio 776 = 776 pirminiai daugikliai: {2: 3, 97: 1}
-Modulio 1107 = 1107 pirminiai daugikliai: {3: 3, 41: 1}
+<pre>Modulio 776  pirminiai daugikliai: {2: 3, 97: 1}
+Modulio 1107 pirminiai daugikliai: {3: 3, 41: 1}
 </pre>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=da077311">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="3.-Galios-radimo-funkcija">3. Galios radimo funkcija<a class="anchor-link" href="#3.-Galios-radimo-funkcija">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7562,15 +7608,10 @@ Modulio 1107 = 1107 pirminiai daugikliai: {3: 3, 41: 1}
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [116]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [201]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">gcd</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">stats</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">find_power</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">find_power</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Rasti sekos galią (mažiausią s, kur (a-1)^s ≡ 0 mod m)."""</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="mi">1</span>
     <span class="n">s</span> <span class="o">=</span> <span class="mi">1</span>
@@ -7595,15 +7636,26 @@ Modulio 1107 = 1107 pirminiai daugikliai: {3: 3, 41: 1}
 </div>
 </div>
 </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f23d2307">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="4.-Daugiklio-$a$-paie%C5%A1ka">4. Daugiklio $a$ paieška<a class="anchor-link" href="#4.-Daugiklio-$a$-paie%C5%A1ka">¶</a></h2>
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=49b7e02a">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [117]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [202]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">m_776</span><span class="o">=</span><span class="mi">776</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">m_776</span> <span class="o">=</span> <span class="mi">776</span>
 
 <span class="n">valid_a_values_776</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -7616,16 +7668,11 @@ Modulio 1107 = 1107 pirminiai daugikliai: {3: 3, 41: 1}
             <span class="k">if</span> <span class="n">b</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">b</span> <span class="o">%</span> <span class="mi">97</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">b</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">power</span> <span class="o">=</span> <span class="n">find_power</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">m_776</span><span class="p">)</span>
                 <span class="n">valid_a_values_776</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">power</span><span class="p">))</span>
-<span class="c1"># Rūšiuoti pagal galią (didesnė yra geresnė)</span>
+                
+<span class="c1"># Rūšiuoti pagal galią</span>
 <span class="n">valid_a_values_776</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># Spausdinti rezultatus</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="si">{</span><span class="s1">'Daugiklis a'</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}{</span><span class="s1">'b=a-1'</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}{</span><span class="s1">'Galingumas s'</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">power</span> <span class="ow">in</span> <span class="n">valid_a_values_776</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>  <span class="c1"># Rodyti 3 geriausius rezultatus</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">a</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}{</span><span class="n">b</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}{</span><span class="n">power</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-<span class="n">m_1107</span><span class="o">=</span><span class="mi">1107</span>
+<span class="n">m_1107</span> <span class="o">=</span> <span class="mi">1107</span>
 
 <span class="n">valid_a_values_1107</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -7639,13 +7686,20 @@ Modulio 1107 = 1107 pirminiai daugikliai: {3: 3, 41: 1}
             <span class="k">if</span> <span class="n">b</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">b</span> <span class="o">%</span> <span class="mi">41</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">power</span> <span class="o">=</span> <span class="n">find_power</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">m_1107</span><span class="p">)</span>
                 <span class="n">valid_a_values_1107</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">power</span><span class="p">))</span>
-<span class="c1"># Rūšiuoti pagal galią (didesnė yra geresnė)</span>
+
+<span class="c1"># Rūšiuoti pagal galią</span>
 <span class="n">valid_a_values_1107</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># Spausdinti rezultatus</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="si">{</span><span class="s1">'Daugiklis a'</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}{</span><span class="s1">'b=a-1'</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}{</span><span class="s1">'Galingumas s'</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Kai m = 776:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'Daugiklis a'</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}{</span><span class="s1">'b=a-1'</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}{</span><span class="s1">'Galingumas s'</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">power</span> <span class="ow">in</span> <span class="n">valid_a_values_1107</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>  <span class="c1"># Rodyti 3 geriausius rezultatus</span>
+<span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">power</span> <span class="ow">in</span> <span class="n">valid_a_values_776</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>  <span class="c1"># Rodyti 3 geriausius rezultatus</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">a</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}{</span><span class="n">b</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}{</span><span class="n">power</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Kai m = 1107:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'Daugiklis a'</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}{</span><span class="s1">'b=a-1'</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}{</span><span class="s1">'Galingumas s'</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">power</span> <span class="ow">in</span> <span class="n">valid_a_values_1107</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">a</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}{</span><span class="n">b</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}{</span><span class="n">power</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -7659,10 +7713,11 @@ Modulio 1107 = 1107 pirminiai daugikliai: {3: 3, 41: 1}
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>
+<pre>Kai m = 776:
 Daugiklis a    b=a-1          Galingumas s   
 389            388            2              
 
+Kai m = 1107:
 Daugiklis a    b=a-1          Galingumas s   
 124            123            3              
 247            246            3              
@@ -7677,18 +7732,17 @@ Daugiklis a    b=a-1          Galingumas s
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [118]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [203]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Geriausias rezultatas</span>
-<span class="n">best_a_776</span><span class="p">,</span> <span class="n">best_b_776</span><span class="p">,</span> <span class="n">best_power_776</span> <span class="o">=</span> <span class="n">valid_a_values_776</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Geriausias rezultatas:"</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">best_a_776</span><span class="p">,</span> <span class="n">best_b_776</span><span class="p">,</span> <span class="n">best_power_776</span> <span class="o">=</span> <span class="n">valid_a_values_776</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Geriausias m = 776 rezultatas:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Daugiklis a = </span><span class="si">{</span><span class="n">best_a_776</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"b = a - 1 = </span><span class="si">{</span><span class="n">best_b_776</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Galingumas s = </span><span class="si">{</span><span class="n">best_power_776</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="n">best_a_1107</span><span class="p">,</span> <span class="n">best_b_1107</span><span class="p">,</span> <span class="n">best_power_1107</span> <span class="o">=</span> <span class="n">valid_a_values_1107</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Geriausias rezultatas:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Geriausias m = 1107 rezultatas:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Daugiklis a = </span><span class="si">{</span><span class="n">best_a_1107</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"b = a - 1 = </span><span class="si">{</span><span class="n">best_b_1107</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Galingumas s = </span><span class="si">{</span><span class="n">best_power_1107</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
@@ -7704,13 +7758,12 @@ Daugiklis a    b=a-1          Galingumas s
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>
-Geriausias rezultatas:
+<pre>Geriausias m = 776 rezultatas:
 Daugiklis a = 389
 b = a - 1 = 388
 Galingumas s = 2
 
-Geriausias rezultatas:
+Geriausias m = 1107 rezultatas:
 Daugiklis a = 124
 b = a - 1 = 123
 Galingumas s = 3
@@ -7719,12 +7772,54 @@ Galingumas s = 3
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=f2b62012">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=e7612795">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [119]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [204]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Patikrinimas:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"b^s mod m = </span><span class="si">{</span><span class="n">best_b_776</span><span class="si">}</span><span class="s2">^</span><span class="si">{</span><span class="n">best_power_776</span><span class="si">}</span><span class="s2"> mod </span><span class="si">{</span><span class="n">m_776</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="nb">pow</span><span class="p">(</span><span class="n">best_b_776</span><span class="p">,</span><span class="w"> </span><span class="n">best_power_776</span><span class="p">,</span><span class="w"> </span><span class="n">m_776</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"b^s mod m = </span><span class="si">{</span><span class="n">best_b_1107</span><span class="si">}</span><span class="s2">^</span><span class="si">{</span><span class="n">best_power_1107</span><span class="si">}</span><span class="s2"> mod </span><span class="si">{</span><span class="n">m_1107</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="nb">pow</span><span class="p">(</span><span class="n">best_b_1107</span><span class="p">,</span><span class="w"> </span><span class="n">best_power_1107</span><span class="p">,</span><span class="w"> </span><span class="n">m_1107</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Patikrinimas:
+b^s mod m = 388^2 mod 776 = 0
+b^s mod m = 123^3 mod 1107 = 0
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=defcb57c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="6.-Koreliacijos-skai%C4%8Diavimas">6. Koreliacijos skaičiavimas<a class="anchor-link" href="#6.-Koreliacijos-skai%C4%8Diavimas">¶</a></h2>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6a0c5a0d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [205]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">find_valid_c</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
@@ -7738,55 +7833,8 @@ Galingumas s = 3
             <span class="n">valid_c_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">valid_c_values</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=e7612795">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [120]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"b^s mod m = </span><span class="si">{</span><span class="n">best_b_776</span><span class="si">}</span><span class="s2">^</span><span class="si">{</span><span class="n">best_power_776</span><span class="si">}</span><span class="s2"> mod </span><span class="si">{</span><span class="n">m_776</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="nb">pow</span><span class="p">(</span><span class="n">best_b_776</span><span class="p">,</span><span class="w"> </span><span class="n">best_power_776</span><span class="p">,</span><span class="w"> </span><span class="n">m_776</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="c1"># Rasti tinkamas c reikšmes</span>
-<span class="n">valid_c_values</span> <span class="o">=</span> <span class="n">find_valid_c</span><span class="p">(</span><span class="n">m_776</span><span class="p">)</span>
 
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"b^s mod m = </span><span class="si">{</span><span class="n">best_b_1107</span><span class="si">}</span><span class="s2">^</span><span class="si">{</span><span class="n">best_power_1107</span><span class="si">}</span><span class="s2"> mod </span><span class="si">{</span><span class="n">m_1107</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="nb">pow</span><span class="p">(</span><span class="n">best_b_1107</span><span class="p">,</span><span class="w"> </span><span class="n">best_power_1107</span><span class="p">,</span><span class="w"> </span><span class="n">m_1107</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="c1"># Rasti tinkamas c reikšmes</span>
-<span class="n">valid_c_values</span> <span class="o">=</span> <span class="n">find_valid_c</span><span class="p">(</span><span class="n">m_1107</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>b^s mod m = 388^2 mod 776 = 0
-b^s mod m = 123^3 mod 1107 = 0
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=6a0c5a0d">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [121]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">calculate_theoretical_correlation</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_theoretical_correlation</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    C ≈ (1/a) * (1 - 6(c/m) + 6(c/m)²)</span>
 <span class="sd">    </span>
@@ -7820,11 +7868,14 @@ b^s mod m = 123^3 mod 1107 = 0
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [122]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [206]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">theoretical_correlations_776</span> <span class="o">=</span> <span class="n">test_c_correlation</span><span class="p">(</span><span class="n">best_a_776</span><span class="p">,</span> <span class="n">m_776</span><span class="p">,</span> <span class="n">valid_c_values</span><span class="p">,</span> <span class="n">num_tests</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Rasti tinkamas c reikšmes</span>
+<span class="n">valid_c_values</span> <span class="o">=</span> <span class="n">find_valid_c</span><span class="p">(</span><span class="n">m_776</span><span class="p">)</span>
+<span class="n">valid_c_values</span> <span class="o">=</span> <span class="n">find_valid_c</span><span class="p">(</span><span class="n">m_1107</span><span class="p">)</span>
 
+<span class="n">theoretical_correlations_776</span> <span class="o">=</span> <span class="n">test_c_correlation</span><span class="p">(</span><span class="n">best_a_776</span><span class="p">,</span> <span class="n">m_776</span><span class="p">,</span> <span class="n">valid_c_values</span><span class="p">,</span> <span class="n">num_tests</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 <span class="n">theoretical_correlations_1107</span> <span class="o">=</span> <span class="n">test_c_correlation</span><span class="p">(</span><span class="n">best_a_1107</span><span class="p">,</span> <span class="n">m_1107</span><span class="p">,</span> <span class="n">valid_c_values</span><span class="p">,</span> <span class="n">num_tests</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== Teorinės koreliacijos rezultatai 776 ==="</span><span class="p">)</span>
@@ -7832,16 +7883,10 @@ b^s mod m = 123^3 mod 1107 = 0
 <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">corr</span> <span class="ow">in</span> <span class="n">theoretical_correlations_776</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>  <span class="c1"># Rodyti 3 geriausius rezultatus</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">c</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}{</span><span class="n">corr</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-<span class="c1"># Geriausia c reikšmė pagal teorinę formulę</span>
-<span class="n">best_c_776</span><span class="p">,</span> <span class="n">best_corr_776</span> <span class="o">=</span> <span class="n">theoretical_correlations_776</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== Teorinės koreliacijos rezultatai 1107 ==="</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'c reikšmė'</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}{</span><span class="s1">'Teorinė koreliacija'</span><span class="si">:</span><span class="s2">&lt;22</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">corr</span> <span class="ow">in</span> <span class="n">theoretical_correlations_1107</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>  <span class="c1"># Rodyti 3 geriausius rezultatus</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">c</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}{</span><span class="n">corr</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-<span class="c1"># Geriausia c reikšmė pagal teorinę formulę</span>
-<span class="n">best_c_1107</span><span class="p">,</span> <span class="n">best_corr_1107</span> <span class="o">=</span> <span class="n">theoretical_correlations_1107</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -7876,10 +7921,16 @@ c reikšmė      Teorinė koreliacija
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [123]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [207]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Užduočiai naudosime (pagal teorinę formulę):"</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Geriausia c reikšmė pagal teorinę formulę</span>
+<span class="n">best_c_776</span><span class="p">,</span> <span class="n">best_corr_776</span> <span class="o">=</span> <span class="n">theoretical_correlations_776</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Geriausia c reikšmė pagal teorinę formulę</span>
+<span class="n">best_c_1107</span><span class="p">,</span> <span class="n">best_corr_1107</span> <span class="o">=</span> <span class="n">theoretical_correlations_1107</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Užduočiai naudosime:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"c = </span><span class="si">{</span><span class="n">best_c_776</span><span class="si">}</span><span class="s2"> (teorinė koreliacija: </span><span class="si">{</span><span class="n">best_corr_776</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"c = </span><span class="si">{</span><span class="n">best_c_1107</span><span class="si">}</span><span class="s2"> (teorinė koreliacija: </span><span class="si">{</span><span class="n">best_corr_1107</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
 </pre></div>
@@ -7895,7 +7946,7 @@ c reikšmė      Teorinė koreliacija
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>
-Užduočiai naudosime (pagal teorinę formulę):
+Užduočiai naudosime:
 c = 613 (teorinė koreliacija: 0.000011)
 c = 874 (teorinė koreliacija: 0.000024)
 </pre>
@@ -7908,16 +7959,16 @@ c = 874 (teorinė koreliacija: 0.000024)
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [124]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [208]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Pilni tiesinio kongruentinio metodo parametrai 776:"</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Pilni tiesinio kongruentinio metodo parametrai su m = 776:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"a = </span><span class="si">{</span><span class="n">best_a_776</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"c = </span><span class="si">{</span><span class="n">best_c_776</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"m = </span><span class="si">{</span><span class="n">m_776</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Tiesinio kongruentinio metodo formulė: X_n+1 = (</span><span class="si">{</span><span class="n">best_a_776</span><span class="si">}</span><span class="s2"> * X_n + </span><span class="si">{</span><span class="n">best_c_776</span><span class="si">}</span><span class="s2">) mod </span><span class="si">{</span><span class="n">m_776</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Pilni tiesinio kongruentinio metodo parametrai 1107:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Pilni tiesinio kongruentinio metodo parametrai su m = 1107:"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"a = </span><span class="si">{</span><span class="n">best_a_1107</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"c = </span><span class="si">{</span><span class="n">best_c_1107</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"m = </span><span class="si">{</span><span class="n">m_1107</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
@@ -7935,13 +7986,13 @@ c = 874 (teorinė koreliacija: 0.000024)
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>
-Pilni tiesinio kongruentinio metodo parametrai 776:
+Pilni tiesinio kongruentinio metodo parametrai su m = 776:
 a = 389
 c = 613
 m = 776
 Tiesinio kongruentinio metodo formulė: X_n+1 = (389 * X_n + 613) mod 776
 
-Pilni tiesinio kongruentinio metodo parametrai 1107:
+Pilni tiesinio kongruentinio metodo parametrai su m = 1107:
 a = 124
 c = 874
 m = 1107
@@ -7951,12 +8002,23 @@ Tiesinio kongruentinio metodo formulė: X_n+1 = (124 * X_n + 874) mod 1107
 </div>
 </div>
 </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bf2ca45a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="7.-Pseudoatsitiktini%C5%B3-skai%C4%8Di%C5%B3-generavimas">7. Pseudoatsitiktinių skaičių generavimas<a class="anchor-link" href="#7.-Pseudoatsitiktini%C5%B3-skai%C4%8Di%C5%B3-generavimas">¶</a></h2>
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=d6775d6d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [125]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [209]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">generate_lcg_sequence</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
@@ -7979,7 +8041,7 @@ Tiesinio kongruentinio metodo formulė: X_n+1 = (124 * X_n + 874) mod 1107
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [126]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [210]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">seed</span> <span class="o">=</span> <span class="mi">1</span>
@@ -8015,82 +8077,36 @@ Pirmieji 100 sugeneruotų pseudoatsitiktinių skaičių:
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=078a74fb">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=078a74fb">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [127]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [211]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">long_sequence_776</span> <span class="o">=</span> <span class="n">generate_lcg_sequence</span><span class="p">(</span><span class="n">best_a_776</span><span class="p">,</span> <span class="n">best_c_776</span><span class="p">,</span> <span class="n">m_776</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 
-<span class="c1"># Sugeneruoti dvejetainę seką iš LCG sekos (pvz., modulo 2)</span>
+<span class="c1"># Sugeneruoti dvejetainę seką</span>
 <span class="n">binary_sequence_776</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">long_sequence_776</span><span class="p">]</span>
 
-<span class="c1"># Skaičiuoti perėjimus sekoje</span>
-<span class="n">transitions</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">binary_sequence_776</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-    <span class="n">transitions</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">binary_sequence_776</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">binary_sequence_776</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span>
-
-<span class="c1"># Spausdinti perėjimų skaičių</span>
-<span class="n">transition_counts_776</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">transitions</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]:</span>
-    <span class="k">if</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">transition_counts_776</span><span class="p">:</span>
-        <span class="n">transition_counts_776</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">transition_counts_776</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">776 Perėjimų skaičius (pirmi 1000 perėjimų):"</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">transition_counts_776</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-
-
 <span class="n">long_sequence_1107</span> <span class="o">=</span> <span class="n">generate_lcg_sequence</span><span class="p">(</span><span class="n">best_a_1107</span><span class="p">,</span> <span class="n">best_c_1107</span><span class="p">,</span> <span class="n">m_1107</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
-<span class="c1"># Sugeneruoti dvejetainę seką iš LCG sekos (pvz., modulo 2)</span>
+
+<span class="c1"># Sugeneruoti dvejetainę seką</span>
 <span class="n">binary_sequence_1107</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">long_sequence_1107</span><span class="p">]</span>
-
-<span class="c1"># Skaičiuoti perėjimus sekoje</span>
-<span class="n">transitions</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">binary_sequence_1107</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-    <span class="n">transitions</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">binary_sequence_1107</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">binary_sequence_1107</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span>
-
-<span class="c1"># Spausdinti perėjimų skaičių</span>
-<span class="n">transition_counts_1107</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">transitions</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]:</span>
-    <span class="k">if</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">transition_counts_1107</span><span class="p">:</span>
-        <span class="n">transition_counts_1107</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">transition_counts_1107</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">1107 Perėjimų skaičius (pirmi 1000 perėjimų):"</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">transition_counts_1107</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>
-776 Perėjimų skaičius (pirmi 1000 perėjimų):
-(1, 0): 500
-(0, 1): 499
-
-1107 Perėjimų skaičius (pirmi 1000 perėjimų):
-(1, 0): 254
-(0, 0): 249
-(0, 1): 254
-(1, 1): 242
-</pre>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2779df08">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="8.-Generuot%C5%B3-sek%C5%B3-analiz%C4%97">8. Generuotų sekų analizė<a class="anchor-link" href="#8.-Generuot%C5%B3-sek%C5%B3-analiz%C4%97">¶</a></h2>
 </div>
 </div>
 </div>
@@ -8099,7 +8115,7 @@ Pirmieji 100 sugeneruotų pseudoatsitiktinių skaičių:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [128]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [212]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">serial_test_triplets</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
@@ -8139,58 +8155,12 @@ Pirmieji 100 sugeneruotų pseudoatsitiktinių skaičių:
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=89151c0b">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [129]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">serial_test_results</span> <span class="o">=</span> <span class="n">serial_test_triplets</span><span class="p">(</span><span class="n">binary_sequence_776</span><span class="p">)</span>
-    
-<span class="c1"># Spausdinti nuoseklumo testo rezultatus</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Serijų testo trejetams rezultatai:"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Laisvės laipsniai: </span><span class="si">{</span><span class="n">serial_test_results</span><span class="p">[</span><span class="s1">'degrees_of_freedom'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"P-reikšmė: </span><span class="si">{</span><span class="n">serial_test_results</span><span class="p">[</span><span class="s1">'p_value'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-<span class="n">serial_test_results</span> <span class="o">=</span> <span class="n">serial_test_triplets</span><span class="p">(</span><span class="n">binary_sequence_1107</span><span class="p">)</span>
-    
-<span class="c1"># Spausdinti nuoseklumo testo rezultatus</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Serijų testo trejetams rezultatai:"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Laisvės laipsniai: </span><span class="si">{</span><span class="n">serial_test_results</span><span class="p">[</span><span class="s1">'degrees_of_freedom'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"P-reikšmė: </span><span class="si">{</span><span class="n">serial_test_results</span><span class="p">[</span><span class="s1">'p_value'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>     
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>
-Serijų testo trejetams rezultatai:
-Laisvės laipsniai: 7
-P-reikšmė: 0.0000
-
-Serijų testo trejetams rezultatai:
-Laisvės laipsniai: 7
-P-reikšmė: 0.6373
-</pre>
-</div>
-</div>
-</div>
-</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=ab1dbad1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [130]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [214]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">monotonicity_test</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
@@ -8353,55 +8323,121 @@ P-reikšmė: 0.6373
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=78531776">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=78531776">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [114]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [215]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Run the monotonicity test</span>
-<span class="n">monotonicity_test_results</span> <span class="o">=</span> <span class="n">monotonicity_test</span><span class="p">(</span><span class="n">long_sequence_776</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">test_lcg_sequence</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Generuoti ir testuoti LCG seką nurodytais parametrais.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        a: daugiklis (multiplier)</span>
+<span class="sd">        c: prieauglis (increment)</span>
+<span class="sd">        m: modulis</span>
+<span class="sd">        seed: pradinė reikšmė</span>
+<span class="sd">        length: sekos ilgis</span>
+<span class="sd">        label: žymė spausdinant rezultatus</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary su testų rezultatais</span>
+<span class="sd">    """</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="si">{</span><span class="s1">'='</span><span class="o">*</span><span class="mi">20</span><span class="si">}</span><span class="s2"> Testuojam modulį </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">'='</span><span class="o">*</span><span class="mi">20</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    
+    <span class="c1"># 1. Generuoti seką</span>
+    <span class="n">sequence</span> <span class="o">=</span> <span class="n">generate_lcg_sequence</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Sugeneruota </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s2"> pseudoatsitiktinių skaičių"</span><span class="p">)</span>
+    
+    <span class="c1"># 2. Konvertuoti į dvejetainę seką</span>
+    <span class="n">binary_sequence</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sequence</span><span class="p">]</span>
+    
+    <span class="c1"># 3. Skaičiuoti perėjimus sekoje</span>
+    <span class="n">transitions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">binary_sequence</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">transitions</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">binary_sequence</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">binary_sequence</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span>
+    
+    <span class="c1"># Spausdinti perėjimų skaičių</span>
+    <span class="n">transition_counts</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">transitions</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">transition_counts</span><span class="p">:</span>
+            <span class="n">transition_counts</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">transition_counts</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Perėjimų skaičius dvejetainėje sekoje:"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">transition_counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    
+    <span class="c1"># 4. Atlikti serijų testą trejetams</span>
+    <span class="n">serial_test_results</span> <span class="o">=</span> <span class="n">serial_test_triplets</span><span class="p">(</span><span class="n">binary_sequence</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Serijų testo trejetams rezultatai:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Laisvės laipsniai: </span><span class="si">{</span><span class="n">serial_test_results</span><span class="p">[</span><span class="s1">'degrees_of_freedom'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"P-reikšmė: </span><span class="si">{</span><span class="n">serial_test_results</span><span class="p">[</span><span class="s1">'p_value'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    
+    <span class="c1"># 5. Atlikti monotoniškumo testą</span>
+    <span class="n">monotonicity_test_results</span> <span class="o">=</span> <span class="n">monotonicity_test</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Monotoniškumo testo rezultatai:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'Run Length'</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}{</span><span class="s1">'Observed'</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}{</span><span class="s1">'Expected'</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}{</span><span class="s1">'Difference'</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">48</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">length</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'&gt;3'</span><span class="p">]:</span>
+        <span class="n">observed</span> <span class="o">=</span> <span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'total_runs'</span><span class="p">][</span><span class="n">length</span><span class="p">]</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'expected_runs'</span><span class="p">][</span><span class="n">length</span><span class="p">]</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">observed</span> <span class="o">-</span> <span class="n">expected</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">length</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}{</span><span class="n">observed</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}{</span><span class="n">expected</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}{</span><span class="n">diff</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">48</span><span class="p">)</span>
+    
+    <span class="c1"># Sum row</span>
+    <span class="n">total_observed</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'total_runs'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">total_expected</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'expected_runs'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'Total'</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}{</span><span class="n">total_observed</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}{</span><span class="n">total_expected</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}{</span><span class="n">total_observed</span><span class="o">-</span><span class="n">total_expected</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Chi-squared statistic: </span><span class="si">{</span><span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'chi_squared'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"P-value: </span><span class="si">{</span><span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'p_value'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">'sequence'</span><span class="p">:</span> <span class="n">sequence</span><span class="p">,</span>
+        <span class="s1">'binary_sequence'</span><span class="p">:</span> <span class="n">binary_sequence</span><span class="p">,</span>
+        <span class="s1">'transitions'</span><span class="p">:</span> <span class="n">transition_counts</span><span class="p">,</span>
+        <span class="s1">'serial_test'</span><span class="p">:</span> <span class="n">serial_test_results</span><span class="p">,</span>
+        <span class="s1">'monotonicity_test'</span><span class="p">:</span> <span class="n">monotonicity_test_results</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=24f2ad21">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [218]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Testuojam seką su moduliu 776</span>
+<span class="n">results_776</span> <span class="o">=</span> <span class="n">test_lcg_sequence</span><span class="p">(</span>
+    <span class="n">a</span><span class="o">=</span><span class="n">best_a_776</span><span class="p">,</span> 
+    <span class="n">c</span><span class="o">=</span><span class="n">best_c_776</span><span class="p">,</span> 
+    <span class="n">m</span><span class="o">=</span><span class="n">m_776</span><span class="p">,</span> 
+    <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+    <span class="n">length</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> 
+    <span class="n">label</span><span class="o">=</span><span class="s1">'Modulis 776'</span>
+<span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Monotoniškumo testo rezultatai:"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'Run Length'</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}{</span><span class="s1">'Observed'</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}{</span><span class="s1">'Expected'</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}{</span><span class="s1">'Difference'</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">48</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">length</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'&gt;3'</span><span class="p">]:</span>
-    <span class="n">observed</span> <span class="o">=</span> <span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'total_runs'</span><span class="p">][</span><span class="n">length</span><span class="p">]</span>
-    <span class="n">expected</span> <span class="o">=</span> <span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'expected_runs'</span><span class="p">][</span><span class="n">length</span><span class="p">]</span>
-    <span class="n">diff</span> <span class="o">=</span> <span class="n">observed</span> <span class="o">-</span> <span class="n">expected</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">length</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}{</span><span class="n">observed</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}{</span><span class="n">expected</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}{</span><span class="n">diff</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">48</span><span class="p">)</span>
-
-<span class="c1"># Sum row</span>
-<span class="n">total_observed</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'total_runs'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-<span class="n">total_expected</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'expected_runs'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'Total'</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}{</span><span class="n">total_observed</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}{</span><span class="n">total_expected</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}{</span><span class="n">total_observed</span><span class="o">-</span><span class="n">total_expected</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Chi-squared statistic: </span><span class="si">{</span><span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'chi_squared'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"P-value: </span><span class="si">{</span><span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'p_value'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-<span class="c1"># Run the monotonicity test</span>
-<span class="n">monotonicity_test_results</span> <span class="o">=</span> <span class="n">monotonicity_test</span><span class="p">(</span><span class="n">long_sequence_1107</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Monotoniškumo testo rezultatai:"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'Run Length'</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}{</span><span class="s1">'Observed'</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}{</span><span class="s1">'Expected'</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}{</span><span class="s1">'Difference'</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">48</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">length</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'&gt;3'</span><span class="p">]:</span>
-    <span class="n">observed</span> <span class="o">=</span> <span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'total_runs'</span><span class="p">][</span><span class="n">length</span><span class="p">]</span>
-    <span class="n">expected</span> <span class="o">=</span> <span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'expected_runs'</span><span class="p">][</span><span class="n">length</span><span class="p">]</span>
-    <span class="n">diff</span> <span class="o">=</span> <span class="n">observed</span> <span class="o">-</span> <span class="n">expected</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">length</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}{</span><span class="n">observed</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}{</span><span class="n">expected</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}{</span><span class="n">diff</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">48</span><span class="p">)</span>
-
-<span class="c1"># Sum row</span>
-<span class="n">total_observed</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'total_runs'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-<span class="n">total_expected</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'expected_runs'</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'Total'</span><span class="si">:</span><span class="s2">&lt;12</span><span class="si">}{</span><span class="n">total_observed</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}{</span><span class="n">total_expected</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}{</span><span class="n">total_observed</span><span class="o">-</span><span class="n">total_expected</span><span class="si">:</span><span class="s2">&lt;12.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Chi-squared statistic: </span><span class="si">{</span><span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'chi_squared'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"P-value: </span><span class="si">{</span><span class="n">monotonicity_test_results</span><span class="p">[</span><span class="s1">'p_value'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># Testuojam seką su moduliu 1107</span>
+<span class="n">results_1107</span> <span class="o">=</span> <span class="n">test_lcg_sequence</span><span class="p">(</span>
+    <span class="n">a</span><span class="o">=</span><span class="n">best_a_1107</span><span class="p">,</span> 
+    <span class="n">c</span><span class="o">=</span><span class="n">best_c_1107</span><span class="p">,</span> 
+    <span class="n">m</span><span class="o">=</span><span class="n">m_1107</span><span class="p">,</span> 
+    <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+    <span class="n">length</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> 
+    <span class="n">label</span><span class="o">=</span><span class="s1">'Modulis 1107'</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8415,6 +8451,18 @@ P-reikšmė: 0.6373
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>
+==================== Testuojam modulį 776 ====================
+
+Sugeneruota 1000 pseudoatsitiktinių skaičių
+
+Perėjimų skaičius dvejetainėje sekoje:
+(1, 0): 500
+(0, 1): 499
+
+Serijų testo trejetams rezultatai:
+Laisvės laipsniai: 7
+P-reikšmė: 0.0000
+
 Monotoniškumo testo rezultatai:
 Run Length  Observed    Expected    Difference  
 ------------------------------------------------
@@ -8427,6 +8475,20 @@ Total       920.00      667.00      253.00
 
 Chi-squared statistic: 556.4910
 P-value: 0.0000
+
+==================== Testuojam modulį 1107 ====================
+
+Sugeneruota 1000 pseudoatsitiktinių skaičių
+
+Perėjimų skaičius dvejetainėje sekoje:
+(1, 0): 254
+(0, 0): 249
+(0, 1): 254
+(1, 1): 242
+
+Serijų testo trejetams rezultatai:
+Laisvės laipsniai: 7
+P-reikšmė: 0.6373
 
 Monotoniškumo testo rezultatai:
 Run Length  Observed    Expected    Difference  
