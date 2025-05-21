@@ -55,7 +55,6 @@ def monotonicity_test(sequence):
     
     current_run_type = None  # Can be "increasing", "decreasing", or None
     run_length = 1  # Start with a run of length 1
-    run_start_idx = 0
 
     for i in range(1, len(sequence)):
         if sequence[i] > sequence[i-1]:
@@ -81,7 +80,6 @@ def monotonicity_test(sequence):
                 # Start a new increasing run
                 current_run_type = "increasing"
                 run_length = 2  # Current element + previous element
-                run_start_idx = i - 1
         
         elif sequence[i] < sequence[i-1]:
             # Current pair is decreasing
@@ -106,7 +104,6 @@ def monotonicity_test(sequence):
                 # Start a new decreasing run
                 current_run_type = "decreasing"
                 run_length = 2  # Current element + previous element
-                run_start_idx = i - 1
         
         else:  # sequence[i] == sequence[i-1]
             # Equal values - handle as a plateau
@@ -295,7 +292,7 @@ def test_c_correlation(a, m, valid_c_values, num_tests):
     return c_theoretical_correlations
 
 def main():
-    m = 774
+    m = 776
 
     valid_a_values = []
     
@@ -304,11 +301,10 @@ def main():
     for a in range(2, m):
         # Tikrinti tik reikšmes, kur gcd(a,m) = 1
         if gcd(a, m) == 1:
-            b = a - 1
-            # Patikrinti, ar b tenkina mūsų sąlygas
-            # Kai m = 774 = 2 × 3² × 43:
-            # b turėtų dalintis iš 2, 3 ir 43
-            if b % 2 == 0 and b % 3 == 0 and b % 43 == 0:
+            b = a - 1            # Patikrinti, ar b tenkina mūsų sąlygas
+            # Kai m = 776 = 2^3 * 97:
+            # b turėtų dalintis iš 2 ir 97 ir 4 (nes 776 % 4 = 0)
+            if b % 2 == 0 and b % 97 == 0 and b % 4 == 0:
                 power = find_power(a, m)
                 valid_a_values.append((a, b, power))
     # Rūšiuoti pagal galią (didesnė yra geresnė)
@@ -333,7 +329,7 @@ def main():
     # Rasti tinkamas c reikšmes
     valid_c_values = find_valid_c(m)
     
-    theoretical_correlations = test_c_correlation(best_a, m, valid_c_values, num_tests=100)
+    theoretical_correlations = test_c_correlation(best_a, m, valid_c_values, num_tests=1000)
 
     print("\n=== Teorinės koreliacijos rezultatai ===")
     print(f"{'c reikšmė':<15}{'Teorinė koreliacija':<22}")

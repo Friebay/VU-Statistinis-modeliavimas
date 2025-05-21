@@ -5,16 +5,11 @@ import scipy.stats as stats
 
 
 def calculate_theoretical_correlation(a, c, m):
-    """
-    C ≈ (1/a) * (1 - 6(c/m) + 6(c/m)²)
-    
-    Paklaidos formulė (a+6)/m
-    """
+    # C ≈ (1/a) * (1 - 6(c/m) + 6(c/m)²)
     c_m_ratio = c / m
     correlation = (1/a) * (1 - 6 * c_m_ratio + 6 * (c_m_ratio ** 2))
-    error_bound = (a + 6) / m
     
-    return abs(correlation), error_bound
+    return abs(correlation)
 
 def serial_test_triplets(sequence):
     # Generuoti nepersidengiančius trejetus iš sekos pagal užduoties aprašymą
@@ -53,9 +48,8 @@ def monotonicity_test(sequence):
     increasing_runs = {1: 0, 2: 0, 3: 0, '>3': 0}
     decreasing_runs = {1: 0, 2: 0, 3: 0, '>3': 0}
     
-    current_run_type = None  # Can be "increasing", "decreasing", or None
-    run_length = 1  # Start with a run of length 1
-    run_start_idx = 0
+    current_run_type = None  # Didėjantis arba mažėjantis
+    run_length = 1
 
     for i in range(1, len(sequence)):
         if sequence[i] > sequence[i-1]:
@@ -81,7 +75,6 @@ def monotonicity_test(sequence):
                 # Start a new increasing run
                 current_run_type = "increasing"
                 run_length = 2  # Current element + previous element
-                run_start_idx = i - 1
         
         elif sequence[i] < sequence[i-1]:
             # Current pair is decreasing
@@ -106,9 +99,8 @@ def monotonicity_test(sequence):
                 # Start a new decreasing run
                 current_run_type = "decreasing"
                 run_length = 2  # Current element + previous element
-                run_start_idx = i - 1
         
-        else:  # sequence[i] == sequence[i-1]
+        else:  # Jeigu lygūs
             # Equal values - handle as a plateau
             # For the purpose of this test, we'll end any current run
             if current_run_type == "increasing":
@@ -170,22 +162,19 @@ def monotonicity_test(sequence):
         else:  # adjusted_length > 3
             decreasing_runs['>3'] += 1
     
-    # Calculate total runs for each length
     total_runs = {}
     for length in [1, 2, 3, '>3']:
         total_runs[length] = increasing_runs[length] + decreasing_runs[length]
     
-    # Calculate theoretical expected values
+    # Teorinės tikimybės
     n = len(sequence)
-    expected_all = (2*n + 1) / 3  # Formula from reference material
-    expected_1 = (5*n + 6) / 12   # Formula from reference material
-    expected_2 = (11*n - 3) / 60  # Formula from reference material
+    expected_all = (2*n + 1) / 3
+    expected_1 = (5*n + 6) / 12 
+    expected_2 = (11*n - 3) / 60
     
-    # For length 3, using the generalized formula from reference material
     k = 3
     expected_3 = (2*((k**2 + 3*k + 1)*n - (k**3 + 2*k**2 - 4*k - 5))) / math.factorial(k + 3)
     
-    # For lengths > 3, calculate as the remainder to ensure total matches
     expected_gt3 = expected_all - expected_1 - expected_2 - expected_3
     
     expected_runs = {
@@ -194,17 +183,12 @@ def monotonicity_test(sequence):
         3: expected_3,
         '>3': expected_gt3
     }
-    
-    # Calculate chi-squared statistic for all run lengths
+
     chi_squared = sum(((total_runs[length] - expected_runs[length])**2) / expected_runs[length] 
                      for length in [1, 2, 3, '>3'])
     
-    # Calculate p-value with 4-1 = 3 degrees of freedom
+    # p reikšmė su 3 laisvės laipsniais, nes  4 grupės (1, 2, 3 ir >3) minus 1
     p_value = 1 - stats.chi2.cdf(chi_squared, df=3)
-    
-    # Get totals for return value
-    total_observed = sum(total_runs.values())
-    total_expected = sum(expected_runs.values())
     
     return {
         "increasing_runs": increasing_runs,
@@ -213,8 +197,6 @@ def monotonicity_test(sequence):
         "expected_runs": expected_runs,
         "chi_squared": chi_squared,
         "p_value": p_value,
-        "total_observed": total_observed,
-        "total_expected": total_expected
     }
 
 def prime_factorization(n):
@@ -285,9 +267,8 @@ def test_c_correlation(a, m, valid_c_values, num_tests):
     c_theoretical_correlations = []
     
     for c in valid_c_values[:num_tests]:
-        # Only theoretical correlation
-        theoretical_correlation, error_bound = calculate_theoretical_correlation(a, c, m)
-        c_theoretical_correlations.append((c, theoretical_correlation, error_bound))
+        theoretical_correlation = calculate_theoretical_correlation(a, c, m)
+        c_theoretical_correlations.append((c, theoretical_correlation))
     
     # Sort by theoretical correlation (lower is better)
     c_theoretical_correlations.sort(key=lambda x: x[1])
@@ -333,18 +314,18 @@ def main():
     # Rasti tinkamas c reikšmes
     valid_c_values = find_valid_c(m)
     
-    theoretical_correlations = test_c_correlation(best_a, m, valid_c_values, num_tests=100)
+    theoretical_correlations = test_c_correlation(best_a, m, valid_c_values, num_tests=1000)
 
     print("\n=== Teorinės koreliacijos rezultatai ===")
     print(f"{'c reikšmė':<15}{'Teorinė koreliacija':<22}")
-    for c, corr, error in theoretical_correlations[:3]:  # Rodyti 3 geriausius rezultatus
+    for c, corr in theoretical_correlations[:3]:  # Rodyti 3 geriausius rezultatus
         print(f"{c:<15}{corr:.6f}")
     
     # Geriausia c reikšmė pagal teorinę formulę
-    best_c_theo, best_corr_theo, error_bound = theoretical_correlations[0]
+    best_c_theo, best_corr_theo = theoretical_correlations[0]
     
     print("\nUžduočiai naudosime (pagal teorinę formulę):")
-    print(f"c = {best_c_theo} (teorinė koreliacija: {best_corr_theo:.6f}, paklaidos riba: {error_bound:.6f})")
+    print(f"c = {best_c_theo} (teorinė koreliacija: {best_corr_theo:.6f})")
     
     best_c = best_c_theo
     
@@ -406,8 +387,6 @@ def main():
 
     print(f"\nChi-squared statistic: {monotonicity_test_results['chi_squared']:.4f}")
     print(f"P-value: {monotonicity_test_results['p_value']:.4f}")
-    print(f"Increasing runs: {dict(monotonicity_test_results['increasing_runs'])}")
-    print(f"Decreasing runs: {dict(monotonicity_test_results['decreasing_runs'])}")
 
 if __name__ == "__main__":
     main()
