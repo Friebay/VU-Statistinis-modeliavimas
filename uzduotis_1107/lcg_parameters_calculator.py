@@ -43,6 +43,7 @@ def serial_test_triplets(sequence):
         "observed_counts": observed_counts,
         "expected_count": expected_count
     }
+
 def monotonicity_test(sequence):
 
     increasing_runs = {1: 0, 2: 0, 3: 0, '>3': 0}
@@ -352,22 +353,24 @@ def main():
     
     # Spausdinti perėjimų skaičių
     transition_counts = {}
-    for t in transitions[:100]:
+    for t in transitions[:1000]:
         if t in transition_counts:
             transition_counts[t] += 1
         else:
             transition_counts[t] = 1
-    
-    print("\nPerėjimų skaičius (pirmi 100 perėjimų):")
+
+    print("\nPerėjimų skaičius (pirmi 1000 perėjimų):")
     for t, count in transition_counts.items():
         print(f"{t}: {count}")    # Atlikti nuoseklumo testą trejetams
+
     serial_test_results = serial_test_triplets(binary_sequence)
     
     # Spausdinti nuoseklumo testo rezultatus
     print("\nNuoseklumo testo trejetams rezultatai:")
     print(f"Laisvės laipsniai: {serial_test_results['degrees_of_freedom']}")
-    print(f"P-reikšmė: {serial_test_results['p_value']:.4f}")     
-      # Run the monotonicity test
+    print(f"P-reikšmė: {serial_test_results['p_value']:.4f}")
+
+    # Run the monotonicity test
     monotonicity_test_results = monotonicity_test(long_sequence)
 
     print("\nMonotoniškumo testo rezultatai:")
