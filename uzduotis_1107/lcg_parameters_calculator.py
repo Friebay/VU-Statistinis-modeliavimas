@@ -6,10 +6,9 @@ import scipy.stats as stats
 
 def calculate_theoretical_correlation(a, c, m):
     """
-    Calculate the theoretical correlation between adjacent elements using the formula:
     C ≈ (1/a) * (1 - 6(c/m) + 6(c/m)²)
     
-    The error of this formula is less than (a+6)/m
+    Paklaidos formulė (a+6)/m
     """
     c_m_ratio = c / m
     correlation = (1/a) * (1 - 6 * c_m_ratio + 6 * (c_m_ratio ** 2))
@@ -49,34 +48,15 @@ def serial_test_triplets(sequence):
         "observed_counts": observed_counts,
         "expected_count": expected_count
     }
-def monotonicity_test(sequence, debug=False):
-    """
-    Test the monotonicity of a sequence by analyzing runs of increasing and decreasing values.
-    A run is defined as a maximal monotone subsequence (continuously increasing or decreasing).
-    
-    Parameters:
-    sequence -- The sequence to analyze
-    debug -- Parameter kept for backward compatibility but no longer used
-    """
-    if len(sequence) < 2:
-        return {
-            "increasing_runs": {1: 0, 2: 0, 3: 0, '>3': 0},
-            "decreasing_runs": {1: 0, 2: 0, 3: 0, '>3': 0},
-            "total_runs": {1: 0, 2: 0, 3: 0, '>3': 0},
-            "expected_runs": {1: 0, 2: 0, 3: 0, '>3': 0},
-            "chi_squared": 0,
-            "p_value": 1.0
-        }
-    # Initialize run counting
+def monotonicity_test(sequence):
+
     increasing_runs = {1: 0, 2: 0, 3: 0, '>3': 0}
     decreasing_runs = {1: 0, 2: 0, 3: 0, '>3': 0}
     
-    # Initialize variables for run tracking
     current_run_type = None  # Can be "increasing", "decreasing", or None
-    run_length = 1  # Start with a run of length 1 (single element)
+    run_length = 1  # Start with a run of length 1
     run_start_idx = 0
-    
-    # Process the sequence
+
     for i in range(1, len(sequence)):
         if sequence[i] > sequence[i-1]:
             # Current pair is increasing
@@ -328,8 +308,7 @@ def main():
             # Patikrinti, ar b tenkina mūsų sąlygas
             # Kai m = 1107 = 3^3 * 41:
             # b turėtų dalintis iš 3 ir 41
-            # Taip pat, kadangi m dalijasi iš 27 (3^3), b turėtų dalintis iš 9
-            if b % 3 == 0 and b % 41 == 0 and b % 9 == 0:
+            if b % 3 == 0 and b % 41 == 0:
                 power = find_power(a, m)
                 valid_a_values.append((a, b, power))
     # Rūšiuoti pagal galią (didesnė yra geresnė)
